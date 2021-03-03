@@ -41,21 +41,21 @@ CREATE VIEW public.request_2b_by_count AS
 
 ---- 2с ----
 -- 2с1
-CREATE OR REPLACE FUNCTION public.request_2c1() RETURNS TABLE(Company varchar(30), _From VARCHAR(20), _To VARCHAR(20), "Avg Price" INT)
+CREATE OR REPLACE FUNCTION public.request_2c1() RETURNS TABLE(_company varchar(40), _from VARCHAR(40), _to VARCHAR(40), "Avg Price" INT)
     LANGUAGE plpgsql
     AS $$
 begin
 	return query
 		SELECT 
 			C_Name,
-			aFrom.A_Country,
-			aTo.A_Country,
+			aFrom._Country,
+			aTo._Country,
 			(SELECT AVG(T_Cost) FROM Tickets WHERE T_Flight = S_ID)::INT
 		FROM
 			Schedule
 				INNER JOIN (SELECT * FROM Companies WHERE C_Name = 'American Airlines') s ON C_ID = S_Company
-				INNER JOIN Airports aFrom ON aFrom.A_ID = S_From
-				INNER JOIN Airports aTo ON aTo.A_ID = S_To;
+				INNER JOIN (SELECT * FROM airports_select()) aFrom ON aFrom._ID = S_From
+				INNER JOIN (SELECT * FROM airports_select()) aTo ON aTo._ID = S_To;
 end;
 $$;
 
@@ -73,7 +73,7 @@ end
 $$;
 
 -- 2с3
-CREATE OR REPLACE FUNCTION public.request_2c3() RETURNS TABLE(Model varchar(30), Seats INT, "Min Seats" INT, "Avg Seats" INT, "Max Seats" INT)
+CREATE OR REPLACE FUNCTION public.request_2c3() RETURNS TABLE(_model varchar(40), _seats INT, "Min Seats" INT, "Avg Seats" INT, "Max Seats" INT)
     LANGUAGE plpgsql
     AS $$
 begin
@@ -90,7 +90,7 @@ end
 $$;
 
 --2d
-CREATE OR REPLACE FUNCTION public.request_2d(_Amount INT) RETURNS TABLE(Country varchar(40), Airport varchar(60), Amount bigint)
+CREATE OR REPLACE FUNCTION public.request_2d(_amount INT) RETURNS TABLE(_country varchar(40), _airport varchar(40), _amount bigint)
     LANGUAGE plpgsql
     AS $$
 begin
@@ -99,7 +99,7 @@ begin
 		FROM Planes
 			INNER JOIN public.Airports ON A_ID = P_HomeAirport
 		GROUP BY A_Country, A_Name
-		HAVING COUNT(P_ID) >= _Amount;
+		HAVING COUNT(P_ID) >= _amount;
 end
 $$;
 
