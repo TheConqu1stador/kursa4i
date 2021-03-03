@@ -52,3 +52,8 @@ begin
 		HAVING COUNT(P_ID) >= _Amount;
 end
 $$;
+
+--2e
+SELECT C_Name, C_Rating, C_Location
+	FROM Companies 
+	WHERE C_Rating >= ANY(SELECT AVG(C_Rating) FROM Companies GROUP BY C_Location)
