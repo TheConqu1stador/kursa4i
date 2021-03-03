@@ -62,11 +62,11 @@ select * from buyers_insert('Ижутин Игорь Куприянович', '7
 
 --Tickets
 
-select * from tickets_insert('101', '1', '1', '500');
-select * from tickets_insert('21', '2', '2', '2000');
-select * from tickets_insert('112', '3', '3', '3000');
-select * from tickets_insert('251', '4', '4', '4000');
-select * from tickets_insert('111', '5', '5', '5000');
-select * from tickets_insert('47', '6', '6', '6000');
-select * from tickets_insert('310', '7', '7', '7000');
-select * from tickets_insert('57', '8', '8', '8000');
+call tickets_insert('101', '1', '1', '500');
+call tickets_insert('21', '2', '2', '2000');
+call tickets_insert('112', '3', '3', '3000');
+call tickets_insert('251', '4', '4', '4000');
+call tickets_insert('111', '5', '5', '5000');
+call tickets_insert('47', '6', '6', '6000');
+call tickets_insert('310', '7', '7', '7000');
+call tickets_insert('57', '8', '8', '8000');

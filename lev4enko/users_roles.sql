@@ -22,5 +22,5 @@ CREATE USER cassa1 WITH
 	IN ROLE ticketseller
 	ENCRYPTED PASSWORD 'cassacassacassa';
 CREATE USER cassa2 WITH
-	IN ROLE receptionist
+	IN ROLE ticketseller
 	ENCRYPTED PASSWORD 'cassacassa?';

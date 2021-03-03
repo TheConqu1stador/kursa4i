@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION public.schedule_data_check() RETURNS trigger
+CREATE FUNCTION public.schedule_data_check() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
 BEGIN

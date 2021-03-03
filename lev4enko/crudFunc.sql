@@ -308,16 +308,17 @@ begin
 end
 $$;
 
-CREATE FUNCTION public.tickets_insert(_seat integer, _flight integer, _buyer integer, _cost float) RETURNS integer
+CREATE PROCEDURE public.tickets_insert(_seat integer, _flight integer, _buyer integer, _cost float)
     LANGUAGE plpgsql
     AS $$
+declare
+	_amount_of_seats integer;
 begin
+	SELECT P_Seats FROM Planes INTO _amount_of_seats WHERE P_ID = (SELECT S_Plane FROM Schedule WHERE S_ID = _flight);
 	insert into Tickets(T_Seat, T_Flight, T_Buyer, T_Cost)
 	values(_seat, _flight, _buyer, _cost);
-	if found then
-		return 1;
-	else
-		return 0;
+	if (_seat >= _amount_of_seats) then
+		rollback;
 	end if;
 end
 $$;
