@@ -15,3 +15,5 @@
 
 - [ ] Коннект к клиенту
 - [ ] Отчёт
+
+![picture alt](https://user-images.githubusercontent.com/43194859/109808195-dd227300-7c37-11eb-934b-a977a4775014.png)
