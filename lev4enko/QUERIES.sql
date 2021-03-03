@@ -25,3 +25,17 @@ begin
 	return _base_cost * ((100.0 - _discount) / 100.0);
 end
 $$;
+
+--2b
+CREATE VIEW public.request_2b_by_name AS
+	SELECT Companies.C_Name, COUNT(Schedule.S_Company) FROM Schedule
+		INNER JOIN Companies ON Schedule.S_Company = Companies.C_ID
+	GROUP BY Companies.C_Name
+	ORDER BY Companies.C_Name;
+
+CREATE VIEW public.request_2b_by_count AS
+	SELECT Companies.C_Name, COUNT(Schedule.S_Company) as _count FROM Schedule
+		INNER JOIN Companies ON Schedule.S_Company = Companies.C_ID
+	GROUP BY Companies.C_Name
+	ORDER BY _count DESC;
+
