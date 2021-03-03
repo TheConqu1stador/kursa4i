@@ -41,6 +41,23 @@ CREATE VIEW public.request_2b_by_count AS
 
 ---- 2с ----
 -- 2с1
+CREATE OR REPLACE FUNCTION public.request_2c1() RETURNS TABLE(Company varchar(30), _From VARCHAR(20), _To VARCHAR(20), "Avg Price" INT)
+    LANGUAGE plpgsql
+    AS $$
+begin
+	return query
+		SELECT 
+			C_Name,
+			aFrom.A_Country,
+			aTo.A_Country,
+			(SELECT AVG(T_Cost) FROM Tickets WHERE T_Flight = S_ID)::INT
+		FROM
+			Schedule
+				INNER JOIN (SELECT * FROM Companies WHERE C_Name = 'American Airlines') s ON C_ID = S_Company
+				INNER JOIN Airports aFrom ON aFrom.A_ID = S_From
+				INNER JOIN Airports aTo ON aTo.A_ID = S_To;
+end;
+$$;
 
 -- 2с2
 
