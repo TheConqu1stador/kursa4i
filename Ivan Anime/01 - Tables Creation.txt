@@ -1,21 +1,4 @@
-CREATE TABLE IF NOT EXISTS public."Записи ПТС" (
-	"№ Записи" BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-	"№ ПТС" VARCHAR(40),
-	"Дата покупки" TIMESTAMP DEFAULT clock_timestamp(),
-	"Дата продажи" TIMESTAMP DEFAULT clock_timestamp(),
-	"Фамилия" VARCHAR(40),
-	"Имя" VARCHAR(40),
-	"Отчество" VARCHAR(40)
-);
-
-CREATE TABLE IF NOT EXISTS public."ПТС" (
-	"№ ПТС" VARCHAR(40) UNIQUE PRIMARY KEY,
-	"Кол. владельцев" VARCHAR(9),
-	"Компания производитель" VARCHAR(40),
-	"Номер авто" VARCHAR(9)
-);
-
-CREATE TABLE IF NOT EXISTS public."Авто" (
+CREATE TABLE "Авто" (
 	"Гос номер" VARCHAR(9) UNIQUE PRIMARY KEY,
 	"Год выпуска" VARCHAR(12),
 	"Марка" VARCHAR(40), 
@@ -23,14 +6,33 @@ CREATE TABLE IF NOT EXISTS public."Авто" (
 	"Страна пр." VARCHAR(40)
 );
 
-CREATE TABLE IF NOT EXISTS public."Бухгалтер" (
+CREATE TABLE "ПТС" (
+	"№ ПТС" VARCHAR(40) UNIQUE PRIMARY KEY,
+	"Кол. владельцев" VARCHAR(9),
+	"Компания производитель" VARCHAR(40),
+	"Номер авто" VARCHAR(9),
+	CONSTRAINT "FK_ПТС_Авто" FOREIGN KEY("Номер авто") REFERENCES "Авто"("Гос номер")
+);
+
+CREATE TABLE "Записи ПТС" (
+	"№ Записи" BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	"№ ПТС" VARCHAR(40),
+	CONSTRAINT "FK_Записи ПТС_ПТС" FOREIGN KEY("№ ПТС") REFERENCES "ПТС"("№ ПТС"),
+	"Дата покупки" TIMESTAMP DEFAULT clock_timestamp(),
+	"Дата продажи" TIMESTAMP DEFAULT clock_timestamp(),
+	"Фамилия" VARCHAR(40),
+	"Имя" VARCHAR(40),
+	"Отчество" VARCHAR(40)
+);
+
+CREATE TABLE "Бухгалтер" (
 	"№ сотрудника" BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	"Имя" VARCHAR(40),
 	"Фамилия" VARCHAR(40),
 	"Отчество" VARCHAR(40)
 );
 
-CREATE TABLE IF NOT EXISTS public."Двигатель" (
+CREATE TABLE "Двигатель" (
 	"№ n/m" BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	"Модель" VARCHAR(50), 
 	"Мощность" VARCHAR(30),
@@ -39,7 +41,7 @@ CREATE TABLE IF NOT EXISTS public."Двигатель" (
 	"Тип" VARCHAR(30)
 );
 
-CREATE TABLE IF NOT EXISTS public."Диски" (
+CREATE TABLE "Диски" (
 	"№п/п" BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	"Производитель" VARCHAR(50), 
 	"Модель" VARCHAR(30), 
@@ -47,21 +49,21 @@ CREATE TABLE IF NOT EXISTS public."Диски" (
 	"Тип" VARCHAR(30)
 );
 
-CREATE TABLE IF NOT EXISTS public."Доверенность" (
+CREATE TABLE "Доверенность" (
 	"№ доверенности" BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	"Дата выдачи" TIMESTAMP, 
 	"№ сотрудника" BIGINT, 
 	"Срок действия" INT
 );
 
-CREATE TABLE IF NOT EXISTS public."Дов-сть авто" (
+CREATE TABLE "Дов-сть авто" (
 	"№ автомобиля" VARCHAR(9) UNIQUE PRIMARY KEY,
 	"Дата выдачи" TIMESTAMP, 
 	"Кем выдан" BIGINT,
 	"Срок действия" INT
 );
 
-CREATE TABLE IF NOT EXISTS public."Договор" (
+CREATE TABLE "Договор" (
 	"№ договора" BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	"№ доверенности" BIGINT,
 	"№ продавца" BIGINT, 
@@ -72,28 +74,28 @@ CREATE TABLE IF NOT EXISTS public."Договор" (
 	"СТС" VARCHAR(40)
 );
 
-CREATE TABLE IF NOT EXISTS public."Заявка" (
+CREATE TABLE "Заявка" (
 	"№п/п" BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	"№ оператора" BIGINT, 
 	"Номер Авто" VARCHAR(9), 
 	"Телефон" VARCHAR(17)
 );
 
-CREATE TABLE IF NOT EXISTS public."Колесо" (
+CREATE TABLE "Колесо" (
 	"№п/п" BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	"№ дисков" BIGINT, 
 	"№ шин" BIGINT, 
 	"Диаметр" INT
 );
 
-CREATE TABLE IF NOT EXISTS public."Контакты" (
+CREATE TABLE "Контакты" (
 	"№ сотрудника" BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	"Email" VARCHAR(40), 
 	"Мобильный телефон" VARCHAR(17), 
 	"Корпоративный телефон" VARCHAR(17)
 );
 
-CREATE TABLE IF NOT EXISTS public."Коорд." (
+CREATE TABLE "Коорд." (
 	"№ n/m" BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	"Email" VARCHAR(40), 
 	"Мобильный телефон" VARCHAR(17), 
@@ -102,13 +104,13 @@ CREATE TABLE IF NOT EXISTS public."Коорд." (
 	"Дом" VARCHAR(10)
 );
 
-CREATE TABLE IF NOT EXISTS public."КПП" (
+CREATE TABLE "КПП" (
 	"№ n/m" BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	"Тип коробки" VARCHAR(20), 
 	"Кол-во передач" INT
 );
 
-CREATE TABLE IF NOT EXISTS public."Налог.Дек." (
+CREATE TABLE "Налог.Дек." (
 	"№ декларации" BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	"КПП" VARCHAR(30), 
 	"Доход" INT, 
@@ -120,7 +122,7 @@ CREATE TABLE IF NOT EXISTS public."Налог.Дек." (
 	"Сумма" INT
 );
 
-CREATE TABLE IF NOT EXISTS public."Оператор" (
+CREATE TABLE "Оператор" (
 	"№ сотрудника" BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	"Имя" VARCHAR(40), 
 	"Фамилия" VARCHAR(40), 
@@ -128,7 +130,7 @@ CREATE TABLE IF NOT EXISTS public."Оператор" (
 	"ИНН" VARCHAR(40)
 );
 
-CREATE TABLE IF NOT EXISTS public."Паспорт" (
+CREATE TABLE "Паспорт" (
 	"Код паспорта" VARCHAR(100) UNIQUE PRIMARY KEY,
 	"Номер" INT,
 	"Серия" INT, 
@@ -136,26 +138,26 @@ CREATE TABLE IF NOT EXISTS public."Паспорт" (
 	"Дата выдачи" TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS public."Переч. Штрафов" (
+CREATE TABLE "Переч. Штрафов" (
 	"№ в ГИБДД" BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	"Дата" TIMESTAMP, 
 	"Сумма" INT
 );
 
-CREATE TABLE IF NOT EXISTS public."Продавец" (
+CREATE TABLE "Продавец" (
 	"№n/m" BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	"Дата нач. действия" TIMESTAMP, 
 	"Срок" VARCHAR(9)
 );
 
 
-CREATE TABLE IF NOT EXISTS public."РПДС" (
+CREATE TABLE "РПДС" (
 	"№ n/m" BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, 
 	"Дата" TIMESTAMP, 
 	"Срок" TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS public."СТС" (
+CREATE TABLE "СТС" (
 	"№ СТС" BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	"Вес ТС" INT, 
 	"VIN номер" INT, 
@@ -166,7 +168,7 @@ CREATE TABLE IF NOT EXISTS public."СТС" (
 	"Цвет кузова" VARCHAR(20)
 );
 
-CREATE TABLE IF NOT EXISTS public."Счет-фактура" ( 
+CREATE TABLE "Счет-фактура" ( 
 	"№ счета-фактуры" BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	"№ покупателя" INT, 
 	"№ сотрудника" INT, 
@@ -176,14 +178,14 @@ CREATE TABLE IF NOT EXISTS public."Счет-фактура" (
 	"Сумма документа" INT
 );
 
-CREATE TABLE IF NOT EXISTS public."Шины" (
+CREATE TABLE "Шины" (
 	"№n/m" BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	"Модель" VARCHAR(40), 
 	"Сезонность" VARCHAR(20), 
 	"Производитель" VARCHAR(40)
 );
 
-CREATE TABLE IF NOT EXISTS public."Эксперт" (
+CREATE TABLE "Эксперт" (
 	"№ сотрудника" BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	"Имя" VARCHAR(40),
 	"Фамилия" VARCHAR(40), 
