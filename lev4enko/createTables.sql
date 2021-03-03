@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS public.Schedule (
 	S_To INT
 		DEFAULT 0,
 	S_Active BOOLEAN
-		DEFAULT true;
+		DEFAULT true,
 	CONSTRAINT FK_Schedule_Planes_P_ID
 		FOREIGN KEY(S_Plane)
 			REFERENCES public.Planes(P_ID)
