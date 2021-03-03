@@ -39,3 +39,16 @@ CREATE VIEW public.request_2b_by_count AS
 	GROUP BY Companies.C_Name
 	ORDER BY _count DESC;
 
+--2d
+CREATE OR REPLACE FUNCTION public.request_2d() RETURNS TABLE(Country varchar(40), Airport varchar(60), Amount bigint)
+    LANGUAGE plpgsql
+    AS $$
+begin
+	return query
+		SELECT A_Country, A_Name, COUNT(P_ID)
+		FROM Planes
+			INNER JOIN public.Airports ON A_ID = P_HomeAirport
+		GROUP BY A_Country, A_Name
+		HAVING COUNT(P_ID) > 0;
+end
+$$;
