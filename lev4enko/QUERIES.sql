@@ -27,13 +27,31 @@ end
 $$;
 
 --2b
-CREATE VIEW public.request_2b_by_name AS
+CREATE FUNCTION public.request_2b_by_name() RETURNS TABLE(_name varchar(40), _count bigint)
+    LANGUAGE plpgsql
+    AS $$
+begin
+	return query
+	select * from request_2b_by_name_view;
+end
+$$;
+
+CREATE FUNCTION public.request_2b_by_count() RETURNS TABLE(_name varchar(40), _count bigint)
+    LANGUAGE plpgsql
+    AS $$
+begin
+	return query
+	select * from request_2b_by_count_view;
+end
+$$;
+
+CREATE VIEW public.request_2b_by_name_view AS
 	SELECT Companies.C_Name, COUNT(Schedule.S_Company) FROM Schedule
 		INNER JOIN Companies ON Schedule.S_Company = Companies.C_ID
 	GROUP BY Companies.C_Name
 	ORDER BY Companies.C_Name;
 
-CREATE VIEW public.request_2b_by_count AS
+CREATE VIEW public.request_2b_by_count_view AS
 	SELECT Companies.C_Name, COUNT(Schedule.S_Company) as _count FROM Schedule
 		INNER JOIN Companies ON Schedule.S_Company = Companies.C_ID
 	GROUP BY Companies.C_Name
@@ -90,7 +108,7 @@ end
 $$;
 
 --2d
-CREATE OR REPLACE FUNCTION public.request_2d(_amount INT) RETURNS TABLE(_country varchar(40), _airport varchar(40), _amount bigint)
+CREATE OR REPLACE FUNCTION public.request_2d(_request_amount INT) RETURNS TABLE(_country varchar(40), _airport varchar(40), _amount bigint)
     LANGUAGE plpgsql
     AS $$
 begin
