@@ -62,7 +62,7 @@ select * from buyers_insert('Ижутин Игорь Куприянович', '7
 
 --Tickets
 
-select * from tickets_insert('101', '1', '1', '1000');
+select * from tickets_insert('101', '1', '1', '500');
 select * from tickets_insert('21', '2', '2', '2000');
 select * from tickets_insert('112', '3', '3', '3000');
 select * from tickets_insert('251', '4', '4', '4000');
