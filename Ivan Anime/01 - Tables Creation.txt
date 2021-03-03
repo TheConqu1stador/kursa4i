@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS public."Записи ПТС" (
+	"№ Записи" BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	"№ ПТС" BIGINT,
+	"Дата покупки" TIMESTAMP DEFAULT clock_timestamp(),
+	"Дата продажи" TIMESTAMP DEFAULT clock_timestamp(),
+	"Фамилия" VARCHAR(40),
+	"Имя" VARCHAR(40),
+	"Отчество" VARCHAR(40)
+);
+
+CREATE TABLE IF NOT EXISTS public."ПТС" (
+	"№ ПТС" BIGINT
+		GENERATED ALWAYS AS IDENTITY
+		PRIMARY KEY,
+	"Кол. владельцев" VARCHAR(9),
+	"Компания производитель" VARCHAR(40),
+	"Номер авто" VARCHAR(9)
+);
+
+-- more to come
