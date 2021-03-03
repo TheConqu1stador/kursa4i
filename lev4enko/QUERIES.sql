@@ -39,6 +39,28 @@ CREATE VIEW public.request_2b_by_count AS
 	GROUP BY Companies.C_Name
 	ORDER BY _count DESC;
 
+---- 2с ----
+-- 2с1
+
+-- 2с2
+
+-- 2с3
+CREATE OR REPLACE FUNCTION public.request_2c3() RETURNS TABLE(Model varchar(30), Seats INT, "Min Seats" INT, "Avg Seats" INT, "Max Seats" INT)
+    LANGUAGE plpgsql
+    AS $$
+begin
+	return query
+		SELECT P_Model, P_Seats,
+			(SELECT MIN(P_Seats) FROM Planes) minseats,
+			(SELECT AVG(P_Seats) FROM Planes)::INT avgseats,
+			(SELECT MAX(P_Seats) FROM Planes) maxseats
+		FROM
+			Planes
+		WHERE
+			EXISTS(SELECT 1 FROM Schedule WHERE S_Plane = P_ID);
+end
+$$;
+
 --2d
 CREATE OR REPLACE FUNCTION public.request_2d(_Amount INT) RETURNS TABLE(Country varchar(40), Airport varchar(60), Amount bigint)
     LANGUAGE plpgsql
