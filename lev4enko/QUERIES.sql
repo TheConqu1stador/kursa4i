@@ -40,7 +40,7 @@ CREATE VIEW public.request_2b_by_count AS
 	ORDER BY _count DESC;
 
 --2d
-CREATE OR REPLACE FUNCTION public.request_2d() RETURNS TABLE(Country varchar(40), Airport varchar(60), Amount bigint)
+CREATE OR REPLACE FUNCTION public.request_2d(_Amount INT) RETURNS TABLE(Country varchar(40), Airport varchar(60), Amount bigint)
     LANGUAGE plpgsql
     AS $$
 begin
@@ -49,6 +49,6 @@ begin
 		FROM Planes
 			INNER JOIN public.Airports ON A_ID = P_HomeAirport
 		GROUP BY A_Country, A_Name
-		HAVING COUNT(P_ID) > 0;
+		HAVING COUNT(P_ID) >= _Amount;
 end
 $$;
