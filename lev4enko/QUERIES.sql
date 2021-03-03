@@ -93,6 +93,13 @@ end
 $$;
 
 --2e
-SELECT C_Name, C_Rating, C_Location
-	FROM Companies 
-	WHERE C_Rating >= ANY(SELECT AVG(C_Rating) FROM Companies GROUP BY C_Location)
+CREATE OR REPLACE FUNCTION public.request_2e() RETURNS TABLE(_name varchar(40), _rating integer, _location varchar(40))
+    LANGUAGE plpgsql
+    AS $$
+begin
+	return query
+		SELECT C_Name, C_Rating, C_Location
+		FROM Companies 
+		WHERE C_Rating >= ANY(SELECT AVG(C_Rating) FROM Companies GROUP BY C_Location);
+end
+$$;
