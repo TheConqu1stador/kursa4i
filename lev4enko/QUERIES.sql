@@ -18,7 +18,7 @@ begin
 end
 $$;
 
-CREATE FUNCTION public.calculate_discount(_base_cost integer, _discount integer) RETURNS FLOAT
+CREATE FUNCTION public.calculate_discount(_base_cost float, _discount integer) RETURNS FLOAT
     LANGUAGE plpgsql
     AS $$
 begin
@@ -60,6 +60,17 @@ end;
 $$;
 
 -- 2с2
+CREATE OR REPLACE FUNCTION public.request_2c2() RETURNS TABLE(_name varchar(40), _terminals integer)
+    LANGUAGE plpgsql
+    AS $$
+begin
+	return query
+		select _airports.A_Name, _airports.A_Terminals FROM Planes,
+			LATERAL (SELECT A_Name, A_Terminals FROM Airports WHERE A_ID = Planes.P_HomeAirport) as _airports
+			WHERE _airports.A_Terminals > (SELECT AVG(A_Terminals) FROM Airports)
+			GROUP BY _airports.A_Name, _airports.A_Terminals;
+end
+$$;
 
 -- 2с3
 CREATE OR REPLACE FUNCTION public.request_2c3() RETURNS TABLE(Model varchar(30), Seats INT, "Min Seats" INT, "Avg Seats" INT, "Max Seats" INT)
