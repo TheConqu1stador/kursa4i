@@ -53,7 +53,7 @@ select * from schedule_insert('2021-02-09 17:37:00', '8', '5', '3', '7', true);
 --Buyers
 select * from buyers_insert('Буков Игорь Матвеевич', '0');
 select * from buyers_insert('Качурина Наталия Тимуровна', '10');
-select * from buyers_insert('Лысов Денис Гаврилевич', '0');
+select * from buyers_insert('Лысов Денис Гаврилович', '0');
 select * from buyers_insert('Калмыкова Анфиса Елизаровна', '0');
 select * from buyers_insert('Кахманова Григорий Артемович', '0');
 select * from buyers_insert('Ямковой Демьян Валерьянович', '5');
