@@ -66,11 +66,6 @@ CREATE TABLE IF NOT EXISTS public.Schedule (
 	S_Plane INT
 		DEFAULT 0,
 	S_Company INT
-<<<<<<< HEAD
-		DEFAULT 0		DEFAULT true;
-	CONSTRAINT FK_Schedule_Planes_P_ID
-		FOREIGN KEY(S_		DEFAULT true,
-=======
 		DEFAULT 0,
 	S_From INT
 		DEFAULT 0,
@@ -78,7 +73,6 @@ CREATE TABLE IF NOT EXISTS public.Schedule (
 		DEFAULT 0,
 	S_Active BOOLEAN
 		DEFAULT true,
->>>>>>> 23c6643d02e074aa4eccc2979b7e6671a1b50df1
 	CONSTRAINT FK_Schedule_Planes_P_ID
 		FOREIGN KEY(S_Plane)
 			REFERENCES public.Planes(P_ID)
@@ -137,10 +131,6 @@ CREATE TABLE IF NOT EXISTS public.Tickets (
 	T_Buyer INT
 		DEFAULT 0,
 	T_Cost FLOAT
-		DEFAULT 0,
-	T_Buyer INT
-		DEFAULT 0,
-	T_Cost FLOAT	
 		DEFAULT 0,
 	CONSTRAINT FK_Tickets_Schedule_S_ID
 		FOREIGN KEY(T_Flight)
