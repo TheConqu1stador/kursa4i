@@ -117,7 +117,7 @@ CREATE TABLE "Доверенность" ( --ok
 	"№ Доверенности" VARCHAR(30) UNIQUE NOT NULL PRIMARY KEY,
 	"Дата выдачи" TIMESTAMP, 
 	"№ Сотрудника" BIGINT,
-	CONSTRAINT "ВК_Доверенность_Бухгалтер" FOREIGN KEY("№ Сотрудника") REFERENCES "Эксперт"("№ Сотрудника"),
+	CONSTRAINT "ВК_Доверенность_Эксперт" FOREIGN KEY("№ Сотрудника") REFERENCES "Эксперт"("№ Сотрудника"),
 	"Срок действия" INT
 );
 
