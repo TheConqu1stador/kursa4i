@@ -228,6 +228,8 @@ CREATE TABLE "Договор" (
 	CONSTRAINT "ВК_Договор_Эксперт" FOREIGN KEY("№ Сотрудника") REFERENCES "Эксперт"("№ Сотрудника"),
 	"Номер авто" VARCHAR(9),
 	CONSTRAINT "ВК_Договор_Авто" FOREIGN KEY("Номер авто") REFERENCES "Авто"("Гос номер"),
+	"Бухгалтер" BIGINT, 
+	CONSTRAINT "ВК_Договор_Бухгалтер" FOREIGN KEY("Бухгалтер") REFERENCES "Бухгалтер"("№ Сотрудника"),
 	"ПТС" VARCHAR(40),
 	CONSTRAINT "ВК_Договор_ПТС" FOREIGN KEY("ПТС") REFERENCES "ПТС"("№ ПТС"),
 	"СТС" VARCHAR(40),
