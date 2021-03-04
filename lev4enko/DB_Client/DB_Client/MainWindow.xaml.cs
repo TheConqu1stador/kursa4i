@@ -30,7 +30,7 @@ namespace DB_Client
             try
             {
                 NpgsqlConnectionStringBuilder builder = new NpgsqlConnectionStringBuilder();
-                builder.Database = "test2";
+                builder.Database = "test3";
                 builder.Host = AddressField.Text;
                 builder.Username = UsernameField.Text;
                 builder.Password = PasswordField.Password;
