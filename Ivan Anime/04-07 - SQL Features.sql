@@ -1,8 +1,20 @@
--- 4
+-- 4 - удаляет устаревшие доверенности
+CREATE OR REPLACE PROCEDURE public."Актуализация доверенностей"()
+	LANGUAGE plpgsql
+	AS $$
+DECLARE
+	"i" INT;
+BEGIN
+	FOR "i" IN (SELECT "№ п/п" FROM "Дов-сть авто") LOOP
+			IF ((SELECT "Дата выдачи" + make_interval(days => "Срок действия") FROM "Дов-сть авто" WHERE "№ п/п" = "i") < clock_timestamp()) THEN
+				DELETE FROM "Дов-сть авто" WHERE "№ п/п" = "i";
+			END IF;
+	END LOOP;
+END
+$$;
 
-
--- 5
-CREATE VIEW "Имеющиеся авто" AS
+-- 5 - каталог авто из договоров
+CREATE VIEW "Каталог" AS
 	SELECT CONCAT("Авто"."Марка", ' ', "Авто"."Модель", ', ', "Авто"."Год выпуска") "Авто", 
 		   CONCAT("Шины"."Производитель", ' ', "Шины"."Модель") "Модель шин", 
 		   CONCAT("Диски"."Производитель", ' ', "Диски"."Модель") "Модель дисков",
