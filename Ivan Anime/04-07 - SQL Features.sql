@@ -34,14 +34,16 @@ CREATE VIEW "Каталог" AS
 		INNER JOIN "Шины" ON "Шины"."№ Записи" = "Колесо"."№ Шин"
 		INNER JOIN "КПП" ON "Авто"."№ КПП" = "КПП"."№ Записи"
 
--- 6 - А что делать то нахуй
-CREATE FUNCTION public."Металлолом"("Номер" VARCHAR(9)) RETURNS INT
+-- 6 - Сдаём машину на запчасти и металлолом
+CREATE OR REPLACE FUNCTION public."Металлолом"("Номер" VARCHAR(9)) RETURNS INT
 	LANGUAGE plpgsql
 	AS $$
 DECLARE
 	"Результат" INT;
 BEGIN
-	"Результат" = 0;
+	"Результат" = GREATEST(3, 20 - date_part('year', now())::INT + (SELECT "Год выпуска" FROM "Авто" WHERE "Гос номер" = "Номер")::INT);
+	"Результат" = "Результат" * (SELECT "Вес ТС" FROM "СТС" WHERE "Номер авто" = "Номер") * 100;
+	RETURN "Результат";
 END
 $$;
 
