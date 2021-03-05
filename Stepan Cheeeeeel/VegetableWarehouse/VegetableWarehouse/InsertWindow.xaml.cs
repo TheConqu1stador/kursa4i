@@ -108,7 +108,7 @@ namespace VegetableWarehouse
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ошибка при удалении!\n" + ex.Message, "Ошибка");
+                MessageBox.Show("Ошибка при вставке!\n" + ex.Message, "Ошибка");
             }
         }
     }
