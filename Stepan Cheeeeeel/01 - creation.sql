@@ -59,7 +59,7 @@ create table SeedsToSell (
 	amount int,
 	minCost int,
 	deadline timestamp,
-	constraint FK_SeedsTradeLink foreign key(StorageID) references SeedsStorage(ID)
+	constraint FK_SeedsTradeLink foreign key(StorageID) references SeedsStorage(ID) on delete cascade
 );
 
 -- outer structure table, production support branch
@@ -108,8 +108,8 @@ create table SeedsSellOffer (
 	cost int,
 	BuyerID int,
 	offerStatus varchar(10),
-	constraint FK_OuterStructureEntry_SeedsToSell foreign key(OrderID) references SeedsToSell(ID),
-	constraint FK_ThirdPartyLink_SeedBuyer foreign key(BuyerID) references SeedBuyer(ID)
+	constraint FK_OuterStructureEntry_SeedsToSell foreign key(OrderID) references SeedsToSell(ID) on delete set null,
+	constraint FK_ThirdPartyLink_SeedBuyer foreign key(BuyerID) references SeedBuyer(ID) on delete cascade
 );
 
 -- structure communication table
@@ -119,8 +119,8 @@ create table SeedsBuyOffer (
 	cost int,
 	SupplierID int,
 	offerStatus varchar(10),
-	constraint FK_OuterStructureEntry_SeedsToBuy foreign key(OrderID) references SeedsToBuy(ID),
-	constraint FK_ThirdPartyLink_SeedSupplier foreign key(SupplierID) references SeedSupplier(ID)
+	constraint FK_OuterStructureEntry_SeedsToBuy foreign key(OrderID) references SeedsToBuy(ID) on delete set null,
+	constraint FK_ThirdPartyLink_SeedSupplier foreign key(SupplierID) references SeedSupplier(ID) on delete cascade
 );
 
 -- structure communication table
@@ -131,6 +131,6 @@ create table VegetableSellOffer (
 	weight int,
 	BuyerID int,
 	offerStatus varchar(10),
-	constraint FK_OuterStructureEntry_GrownVegetablesStorage foreign key(StorageID) references GrownVegetablesStorage(ID),
-	constraint FK_ThirdPartyLink_VegetableBuyer foreign key(BuyerID) references VegetableBuyer(ID)
+	constraint FK_OuterStructureEntry_GrownVegetablesStorage foreign key(StorageID) references GrownVegetablesStorage(ID) on delete set null,
+	constraint FK_ThirdPartyLink_VegetableBuyer foreign key(BuyerID) references VegetableBuyer(ID) on delete cascade
 );
