@@ -22,3 +22,34 @@ create view V_ShowOffers as
 		inner join Species s on gvs.SpeciesID = s.ID
 	where
 		vso.offerStatus is null;
+		
+-- procedure - agree on some offer, reject others, close issue
+
+create or replace procedure BuySeedsAccept(offerID integer)
+	language plpgsql as 
+$$	
+declare
+	_orderID int;
+	seedsGot int;
+	seedsSpecies int;
+	seedsTo int;
+begin
+	_orderID = (select OrderID from SeedsBuyOffer where ID = offerID);
+	update SeedsBuyOffer set offerStatus = 'declined' where OrderID = _orderID;
+	update SeedsBuyOffer set offerStatus = 'accepted' where ID = offerID;
+	
+	seedsGot = (select amount from SeedsToBuy where ID = _orderID);
+	seedsSpecies = (select SpeciesID from SeedsToBuy where ID = _orderID);
+	seedsTo = (select FacilityID from SeedsToBuy where ID = _orderID);
+	
+	delete from SeedsToBuy where ID = _orderID;
+	
+	if (select ID from SeedsStorage where FacilityID = seedsTo and SpeciesID = seedsSpecies) is not null then
+		update SeedsStorage set amount = amount + seedsGot where FacilityID = seedsTo and SpeciesID = seedsSpecies;
+	else
+		insert into SeedsStorage (FacilityID, SpeciesID, amount, expirationDate) values
+			(seedsTo, seedsSpecies, seedsGot, now() + '1 year');
+	end if;
+	
+end
+$$;
