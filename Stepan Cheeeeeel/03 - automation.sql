@@ -53,3 +53,36 @@ begin
 	
 end
 $$;
+
+-- procedure 2 - agree on some offer, reject others + rollback transaction
+
+create or replace procedure SellSeedsAccept(offerID integer)
+	language plpgsql as 
+$$	
+declare
+	_orderID int;
+	seedsSold int;
+	_StorageID int;
+begin
+	_orderID = (select OrderID from SeedsSellOffer where ID = offerID);
+	update SeedsSellOffer set offerStatus = 'declined' where OrderID = _orderID;
+	update SeedsSellOffer set offerStatus = 'accepted' where ID = offerID;
+	
+	_StorageID = (select StorageID from SeedsToSell where ID = _orderID);
+	seedsSold = (select amount from SeedsToSell where ID = _orderID);
+	
+	delete from SeedsToSell where ID = _orderID;
+	
+	if (select ID from SeedsStorage where ID = _storageID) is null then
+		rollback;
+	else
+		if (select amount from SeedsStorage where ID = _storageID) >= seedsSold then
+		update SeedsStorage set amount = amount - seedsSold where ID = _storageID;
+		else
+			rollback;
+		end if;
+	end if;
+	
+end
+$$;
+
