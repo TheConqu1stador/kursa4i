@@ -544,6 +544,8 @@ GRANT SELECT ON TABLE public."Двигатель" TO operator;
 GRANT SELECT ON TABLE public."Колесо" TO operator;
 GRANT SELECT ON TABLE public."Диски" TO operator;
 GRANT SELECT ON TABLE public."Шины" TO operator;
+GRANT SELECT ON TABLE public."Авто" TO operator;
+GRANT SELECT ON public."Каталог" TO operator;
 
 CREATE USER john WITH
 	IN ROLE operator
@@ -564,6 +566,8 @@ GRANT SELECT ON TABLE public."Двигатель" TO seller;
 GRANT SELECT ON TABLE public."Колесо" TO seller;
 GRANT SELECT ON TABLE public."Диски" TO seller;
 GRANT SELECT ON TABLE public."Шины" TO seller;
+GRANT SELECT ON TABLE public."Авто" TO seller;
+GRANT SELECT ON public."Каталог" TO seller;
 GRANT SELECT,INSERT,UPDATE ON TABLE public."Паспорт" TO seller;
 GRANT SELECT,INSERT,UPDATE ON TABLE public."Координаты" TO seller;
 GRANT SELECT,INSERT,UPDATE ON TABLE public."Дов-сть авто" TO seller;
