@@ -1,4 +1,4 @@
--- 4 - удаляет устаревшие и неиспользуемые при этом доверенности, можно их побольше сделать
+-- 4 - удаляет устаревшие и неиспользуемые при этом доверенности
 CREATE OR REPLACE PROCEDURE public."Актуализация доверенностей"()
 	LANGUAGE plpgsql
 	AS $$
@@ -6,13 +6,15 @@ DECLARE
 	"i" INT;
 BEGIN
 	FOR "i" IN (SELECT "№ Записи" FROM "Дов-сть авто") LOOP
-		IF ((SELECT "Дата выдачи" + make_interval(days => "Срок действия") FROM "Дов-сть авто" WHERE "№ Записи" = "i") < clock_timestamp()) THEN
+		IF ((SELECT "Дата выдачи" + make_interval(days => "Срок действия") 
+			FROM "Дов-сть авто" WHERE "№ Записи" = "i") < clock_timestamp()) THEN
 			DELETE FROM "Дов-сть авто" WHERE "№ Записи" = "i";
 		END IF;
 	END LOOP;
 	FOR "i" IN (SELECT "№ Доверенности" FROM "Доверенность") LOOP
 		IF (SELECT "№ Договора" FROM "Договор" WHERE "№ Доверенности" = "i") IS NULL THEN
-			IF ((SELECT "Дата выдачи" + make_interval(days => "Срок действия") FROM "Дов-сть авто" WHERE "№ Доверенности" = "i") < clock_timestamp()) THEN
+			IF ((SELECT "Дата выдачи" + make_interval(days => "Срок действия") 
+				FROM "Дов-сть авто" WHERE "№ Доверенности" = "i") < clock_timestamp()) THEN
 				DELETE FROM "Доверенность" WHERE "№ Доверенности" = "i";
 			END IF;
 		END IF;
