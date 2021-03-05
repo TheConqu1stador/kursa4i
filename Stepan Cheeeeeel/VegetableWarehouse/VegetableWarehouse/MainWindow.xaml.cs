@@ -61,23 +61,28 @@ namespace VegetableWarehouse
             ShowOffersBtn.IsEnabled = false;
             SellSeedsBtn.IsEnabled = false;
             BuySeedsBtn.IsEnabled = false;
+            DelRecordBtn.IsEnabled = false;
+            AddRecordBtn.IsEnabled = false;
             CalculateFacilityBtn.IsEnabled = false;
         }
         private void TablesList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string tableName = TablesList.SelectedItem.ToString();
-            try
+            if (TablesList.SelectedItem != null)
             {
-                dt = conn.execute("SELECT * FROM " + tableName);
-                DbGrid.ItemsSource = dt.DefaultView;
-                selTableName = tableName;
+                string tableName = TablesList.SelectedItem.ToString();
+                try
+                {
+                    dt = conn.execute("SELECT * FROM " + tableName);
+                    DbGrid.ItemsSource = dt.DefaultView;
+                    selTableName = tableName;
 
-                DelRecordBtn.IsEnabled = true;
-                AddRecordBtn.IsEnabled = true;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
+                    DelRecordBtn.IsEnabled = true;
+                    AddRecordBtn.IsEnabled = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
             }
         }
 
