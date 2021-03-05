@@ -149,11 +149,6 @@ namespace VegetableWarehouse
             }
         }
 
-        private void CalculatePriceButton_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
         private void ShowOffersBtn_Click(object sender, RoutedEventArgs e)
         { 
             try
@@ -174,7 +169,7 @@ namespace VegetableWarehouse
             try
             {
                 string value = '\'' + BuySeedsTxtBox.Text.Replace("\'", "") + '\'';
-
+                BuySeedsTxtBox.Text = "";
                 string query = "CALL BuySeedsAccept(" + value + "); SELECT * FROM SeedsBuyOffer ORDER BY id";
 
                 dt = conn.execute(query);
@@ -192,7 +187,7 @@ namespace VegetableWarehouse
             try
             {
                 string value = '\'' + SellSeedsTxtBox.Text.Replace("\'", "") + '\'';
-
+                SellSeedsTxtBox.Text = "";
                 string query = "CALL SellSeedsAccept(" + value + "); SELECT * FROM SeedsSellOffer ORDER BY id";
                 dt = conn.execute(query);
 
@@ -209,7 +204,7 @@ namespace VegetableWarehouse
             try
             {
                 string value = '\'' + CalculateFacilityTxtBox.Text.Replace("\'", "") + '\'';
-
+                CalculateFacilityTxtBox.Text = "";
                 string query = "Select * from CalculateFacilityWorth(" + value + ");";
                 dt = conn.execute(query);
 
