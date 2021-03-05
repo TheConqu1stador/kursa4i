@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-
 using System.Data;
-using Sqldb;
+using System.Collections.Generic;
+using DBConnect;
 
 namespace VegetableWarehouse
 {
     public partial class MainWindow : Window
     {
-        private db hub;
+        private DB conn;
         private DataTable dt;
 
         string selTableName;
@@ -18,29 +18,28 @@ namespace VegetableWarehouse
             InitializeComponent();
         }
 
-
         private void ConnectBtn_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                hub = new db(HostTxtBox.Text, DBNameTxtBox.Text, UsernameTxtBox.Text, PwdBox.Password);
-                hub.DbConnect();
+                conn = new DB(DBNameTxtBox.Text, UsernameTxtBox.Text, PwdBox.Password);
+                conn.DbConnect();
                 ConnectBtn.IsEnabled = false;
                 DisconnectBtn.IsEnabled = true;
 
-                DataTable tmp = hub.SendCommand("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'; ");
+                DataTable tmp = conn.execute("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'; ");
                 foreach (DataRow row in tmp.Rows)
                 {
                     for (int i = 0; i < tmp.Columns.Count; i++)
                     {
-                        TablesComboBox.Items.Add(row[i].ToString());
+                        TablesList.Items.Add(row[i].ToString());
                     }
                 }
 
-                SelectTableButton.IsEnabled = true;
-                ActualizeButton.IsEnabled = true;
-                CatalogButton.IsEnabled = true;
-                CalculatePriceButton.IsEnabled = true;
+                ShowOffersBtn.IsEnabled = true;
+                SellSeedsBtn.IsEnabled = true;
+                BuySeedsBtn.IsEnabled = true;
+                CalculateFacilityBtn.IsEnabled = true;
             }
             catch (Exception ex)
             {
@@ -51,26 +50,25 @@ namespace VegetableWarehouse
 
         private void DisconnectBtn_Click(object sender, RoutedEventArgs e)
         {
-            hub.Disconnect();
-            TablesComboBox.Items.Clear();
+            conn.Disconnect();
+            TablesList.Items.Clear();
             DbGrid.ItemsSource = null;
-            hub = null;
+            conn = null;
             selTableName = null;
             ConnectBtn.IsEnabled = true;
             DisconnectBtn.IsEnabled = false;
 
-            SelectTableButton.IsEnabled = false;
-            ActualizeButton.IsEnabled = false;
-            CatalogButton.IsEnabled = false;
-            CalculatePriceButton.IsEnabled = false;
+            ShowOffersBtn.IsEnabled = false;
+            SellSeedsBtn.IsEnabled = false;
+            BuySeedsBtn.IsEnabled = false;
+            CalculateFacilityBtn.IsEnabled = false;
         }
-
-        private void TBtn_Click(object sender, RoutedEventArgs e)
+        private void TablesList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string tableName = TablesComboBox.Text;
+            string tableName = TablesList.SelectedItem.ToString();
             try
             {
-                dt = hub.SendCommand("SELECT * FROM \"" + tableName + "\"");
+                dt = conn.execute("SELECT * FROM " + tableName);
                 DbGrid.ItemsSource = dt.DefaultView;
                 selTableName = tableName;
 
@@ -95,14 +93,13 @@ namespace VegetableWarehouse
                 string value = '\'' +  ((TextBox)e.EditingElement).Text.ToString().Replace("\'", "") + '\'';
                 string updateQuery = "UPDATE \"" + selTableName + "\" SET \"" + e.Column.Header + "\" = " + value 
                                    + " WHERE \"" + ((DataGrid)sender).Columns[0].Header + "\" = " + ((DataRowView)e.Row.Item)[0].ToString();
-                Console.WriteLine(updateQuery);
                 try
                 {
-                    hub.SendCommand(updateQuery);
+                    conn.execute(updateQuery);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Failed to update!\n" + ex, "SQL Error");
+                    MessageBox.Show("Ошибка при обновлении!\n" + ex, "SQL Error");
                 }
             } else
             {
@@ -116,8 +113,10 @@ namespace VegetableWarehouse
             {
                 try
                 {
-                    string query = "INSERT INTO \"" + selTableName + "\" DEFAULT VALUES; SELECT * FROM \"" + selTableName + "\"";
-                    dt = hub.SendCommand(query);
+                    InsertWindow insert = new InsertWindow(DbGrid.Columns, selTableName, conn, dt);
+                    insert.ShowDialog();
+                    string query = "SELECT * FROM \"" + selTableName + "\"";
+                    dt = conn.execute(query);
                     DbGrid.ItemsSource = dt.DefaultView;
                 }
                 catch (Exception ex)
@@ -135,7 +134,7 @@ namespace VegetableWarehouse
                 {
                     string query = "DELETE FROM \"" + selTableName + "\" WHERE \"" + DbGrid.Columns[0].Header + "\" = " 
                                  + ((DataRowView)DbGrid.SelectedItem)[0].ToString() + "; SELECT * FROM \"" + selTableName + "\"";
-                    dt = hub.SendCommand(query);
+                    dt = conn.execute(query);
                     DbGrid.ItemsSource = dt.DefaultView;
                 }
                 catch (Exception ex)
@@ -145,47 +144,69 @@ namespace VegetableWarehouse
             }
         }
 
-        private void ActualizeButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                string query = "CALL public.\"Актуализация доверенностей\"()";
-                hub.SendCommand(query);
-
-                query = "SELECT * FROM \"Доверенность\"";
-                dt = hub.SendCommand(query);
-
-                DbGrid.ItemsSource = dt.DefaultView;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка");
-            }
-        }
-
-        private void CatalogButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                string query = "SELECT * FROM \"Каталог\"";
-                dt = hub.SendCommand(query);
-
-                DbGrid.ItemsSource = dt.DefaultView;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка");
-            }
-        }
-
         private void CalculatePriceButton_Click(object sender, RoutedEventArgs e)
         {
+            
+        }
+
+        private void ShowOffersBtn_Click(object sender, RoutedEventArgs e)
+        { 
             try
             {
-                string value = '\'' + CarNumberTxtBox.Text.Replace("\'", "") + '\'';
+                string query = "SELECT * FROM V_ShowOffers";
+                dt = conn.execute(query);
 
-                string query = "SELECT * FROM \"Металлолом\"(" + value + ")";
-                dt = hub.SendCommand(query);
+                DbGrid.ItemsSource = dt.DefaultView;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка");
+            }
+        }
+
+        private void BuySeedsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string value = '\'' + BuySeedsTxtBox.Text.Replace("\'", "") + '\'';
+
+                string query = "CALL BuySeedsAccept(" + value + "); SELECT * FROM SeedsBuyOffer ORDER BY id";
+
+                dt = conn.execute(query);
+
+                DbGrid.ItemsSource = dt.DefaultView;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка");
+            }
+        }
+
+        private void SellSeedsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string value = '\'' + SellSeedsTxtBox.Text.Replace("\'", "") + '\'';
+
+                string query = "CALL SellSeedsAccept(" + value + "); SELECT * FROM SeedsSellOffer ORDER BY id";
+                dt = conn.execute(query);
+
+                DbGrid.ItemsSource = dt.DefaultView;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка");
+            }
+        }
+
+        private void CalculateFacilityBtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string value = '\'' + CalculateFacilityTxtBox.Text.Replace("\'", "") + '\'';
+
+                string query = "Select * from CalculateFacilityWorth(" + value + ");";
+                dt = conn.execute(query);
 
                 DbGrid.ItemsSource = dt.DefaultView;
             }

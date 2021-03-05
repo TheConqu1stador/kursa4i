@@ -36,3 +36,5 @@ C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\Vegetab
 C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\obj\Debug\VegetableWarehouse.csproj.CopyComplete
 C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\obj\Debug\VegetableWarehouse.exe
 C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\obj\Debug\VegetableWarehouse.pdb
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\obj\Debug\InsertWindow.g.cs
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\obj\Debug\InsertWindow.baml

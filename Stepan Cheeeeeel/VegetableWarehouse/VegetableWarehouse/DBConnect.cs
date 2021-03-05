@@ -1,22 +1,23 @@
 ﻿using System;
-
 using System.Data;
 using Npgsql;
+using System.Windows;
 
-namespace Sqldb
+namespace DBConnect
 {
-    public class db
+    public class DB
     {
-        private string host, dbName, username, password, connString;
+        private string host, port, dbName, username, password, connString;
         private NpgsqlConnection sc;
         private NpgsqlDataAdapter sda;
-        public db(string _host, string _dbName, string _username, string _password)
+        public DB(string _dbName, string _username, string _password)
         {
-            host = _host;
+            host = "localhost";
+            port = "5432";
             dbName = _dbName;
             username = _username;
             password = _password;
-            connString = "Server=" + host + ";Port=5432;Database=" + dbName + ";User ID=" + username + ";Password=" + password + ";";
+            connString = "Server=" + host + ";Port=" + port + ";Database=" + dbName + ";User ID=" + username + ";Password=" + password + ";";
         }
 
         public void DbConnect()
@@ -25,20 +26,18 @@ namespace Sqldb
             sda = new NpgsqlDataAdapter();
 
             sc.Open();
-            Console.WriteLine("Connected.");
+            MessageBox.Show("Подключено.");
         }
-        public DataTable SendCommand(string request)
+        public DataTable execute(string request)
         {
             DataTable dt = new DataTable();
             try
             {
-                Console.WriteLine("Got query\n" + request);
                 NpgsqlCommand command = new NpgsqlCommand(request, sc);
 
                 sda = new NpgsqlDataAdapter(command);
                 sda.Fill(dt);
 
-                Console.WriteLine("Success.");
                 return dt;
             }
             catch (Exception e)
@@ -51,7 +50,7 @@ namespace Sqldb
         public void Disconnect()
         {
             sc.Close();
-        } 
+        }
 
     };
 
