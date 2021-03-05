@@ -25,7 +25,7 @@ create view V_ShowOffers as
 		
 -- procedure - agree on some offer, reject others, close issue
 
-create or replace procedure BuySeedsAccept(offerID integer)
+create or replace procedure BuySeedsAccept(offerID int)
 	language plpgsql as 
 $$	
 declare
@@ -56,7 +56,7 @@ $$;
 
 -- procedure 2 - agree on some offer, reject others + rollback transaction
 
-create or replace procedure SellSeedsAccept(offerID integer)
+create or replace procedure SellSeedsAccept(offerID int)
 	language plpgsql as 
 $$	
 declare
@@ -86,3 +86,22 @@ begin
 end
 $$;
 
+-- function - get cost of all vegetables growing in this particular facility
+
+create or replace function CalculateFacilityWorth(_FacilityID int) returns float
+	language plpgsql as
+$$
+declare
+	curid int;
+	summ float;
+begin
+	summ = 0;
+	for curid in (select ID from Bed where FacilityID = _FacilityID and SpeciesID is not null) loop
+		summ = summ + 
+			(select marketResultCost from Species where ID =
+				(select SpeciesID from Bed where ID = curid))
+			* (select bedSize from Bed where ID = curID) * 10;
+	end loop;
+	return summ;
+end
+$$;
