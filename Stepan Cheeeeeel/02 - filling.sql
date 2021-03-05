@@ -77,7 +77,7 @@ insert into SeedsToBuy (SpeciesID, amount, maxCost, FacilityID, deadline) values
 insert into SeedBuyer (orgName, country, rating, contactPhone) values
 	('Friendly Farm', 'United Kingdom', 8.9, '+443043894893'),
 	('Happy Cucumber', 'Spain', 9.4, '+348924739182'),
-	('Lawn La\'Marselle', 'France', 8.7, '+338941224742');
+	('Lawn La Marselle', 'France', 8.7, '+338941224742');
 	
 insert into SeedSupplier (orgName, country, rating, contactPhone) values
 	('GT GeneLabs', 'USA', 6.4, '+18439229302'),
@@ -85,9 +85,9 @@ insert into SeedSupplier (orgName, country, rating, contactPhone) values
 	('Ogaio State University', 'USA', 7.9, '+17743290493');
 	
 insert into VegetableBuyer (orgName, country, rating, contactPhone) values
-	('BILLA', 'Austria', '+438920030500'),
-	('Swiss Food Guard', 'Switzerland', '+418392212121'),
-	('Austrafood', 'Australia', '+618430291828');
+	('BILLA', 'Austria', 9.3, '+438920030500'),
+	('Swiss Food Guard', 'Switzerland', 9.8, '+418392212121'),
+	('Austrafood', 'Australia', 8.7, '+618430291828');
 	
 insert into SeedsSellOffer (OrderID, cost, BuyerID, offerStatus) values
 	(1, 13, 1, null),
@@ -124,4 +124,4 @@ insert into VegetableSellOffer (StorageID, cost, weight, BuyerID, offerStatus) v
 	(10, 121.43, 60, 1, null),
 	(10, 110, 60, 3, 'declined'),
 	(2, 200, 150, 1, 'accepted'),
-	(2, 200, 155, 2, 'accepted'),
+	(2, 200, 155, 2, 'accepted');
