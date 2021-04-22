@@ -497,13 +497,13 @@ end
 $$;
 
 --8 scalar
-create function public.q8scalar_GetSeats() returns integer
+create function public.q8scalar_GetSeats(_ID integer) returns integer
 language plpgsql as
 $$
 begin
 	return 
 	(select s.TicketsTotal-s.TicketsSold
-	from Schedule s);
+	from Schedule s where s.ID = _ID);
 end
 $$;
 
