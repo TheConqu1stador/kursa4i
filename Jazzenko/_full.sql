@@ -549,6 +549,7 @@ DECLARE
 	tickets RECORD;
 BEGIN
 	FOR rec IN cur LOOP
+	
 		tickets = q8_GetTicketStat(rec.ID);
 		
 		if (tickets IS NOT NULL) then
@@ -572,17 +573,16 @@ BEGIN
 			
 			update Companies
 			set Rating = rec.Rating
-			where current of cur;
+			where rec.ID = ID;
 			
 			if (rec.Rating > 100) then
 				rollback;
-				return;
+			else
+				commit;
 			end if;
-
 		end if;
 		
 	END LOOP;
-	commit;
 END
 $$;
 
