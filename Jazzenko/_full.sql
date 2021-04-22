@@ -527,3 +527,61 @@ begin
 end
 $$;
 
+--8 table
+create function public.q8_GetTicketStat(_ID integer) returns table(TicketsTotal bigint, TicketsSold bigint)
+language plpgsql as
+$$
+begin
+	return query
+	select sum(Schedule.TicketsTotal), sum(Schedule.TicketsSold)
+	from Schedule
+	where Company = _ID and active = false and FlightDate < now();
+end
+$$;
+
+--678 procedure
+CREATE OR REPLACE PROCEDURE q6_UpdateRating()
+LANGUAGE plpgsql AS
+$$
+DECLARE
+	cur CURSOR FOR SELECT * FROM Companies;
+	rec RECORD;
+	tickets RECORD;
+BEGIN
+	FOR rec IN cur LOOP
+		tickets = q8_GetTicketStat(rec.ID);
+		
+		if (tickets IS NOT NULL) then
+			rec.Rating = rec.Rating + (select
+			(case
+			when ((tickets.TicketsSold::numeric / tickets.TicketsTotal * 100) >= 90)
+				then
+					1
+			when ((tickets.TicketsSold::numeric / tickets.TicketsTotal * 100) >= 70)
+				then
+					0.5
+			when ((tickets.TicketsSold::numeric / tickets.TicketsTotal * 100) >= 50)
+				then
+					- 0.5
+			when ((tickets.TicketsSold::numeric / tickets.TicketsTotal * 100) >= 30)
+				then
+					- 1
+			else
+			 	- 2
+			end));
+			
+			update Companies
+			set Rating = rec.Rating
+			where current of cur;
+			
+			if (rec.Rating > 100) then
+				rollback;
+				return;
+			end if;
+
+		end if;
+		
+	END LOOP;
+	commit;
+END
+$$;
