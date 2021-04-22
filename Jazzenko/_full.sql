@@ -585,3 +585,60 @@ BEGIN
 	commit;
 END
 $$;
+
+-- trigger
+create function public.PlaneTrigger() returns trigger
+    language plpgsql as 
+$$
+begin
+	if (TG_OP = 'INSERT') then
+		NEW.LastMaintenance = now();
+		NEW.Active = true;
+		return NEW;
+	end if;
+	if (TG_OP = 'UPDATE') then
+		if (NEW.Model != OLD.Model) then
+			NEW.Model = OLD.Model;
+		end if;
+		if (NEW.LastMaintenance > now()) then
+			NEW.LastMaintenance = OLD.LastMaintenance;
+		end if;
+		return NEW;
+	end if;
+	if (TG_OP = 'DELETE') then
+		update Schedule 
+		set Active = false 
+		where Plane = OLD.ID;
+		return OLD;
+	end if;
+end
+$$;
+
+create trigger TRIGGER_Planes before insert or update or delete on Planes for each row execute function public.PlaneTrigger();
+
+-- roles
+CREATE ROLE planemanager;
+GRANT SELECT ON TABLE Schedule TO planemanager;
+GRANT SELECT, INSERT ON TABLE Airports TO planemanager;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE Planes TO planemanager;
+GRANT SELECT ON TABLE Companies TO planemanager;
+GRANT USAGE ON SCHEMA public TO planemanager;
+
+CREATE ROLE dispatcher;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE Schedule TO dispatcher;
+GRANT SELECT, INSERT, UPDATE ON TABLE Airports TO dispatcher;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE Planes TO dispatcher;
+GRANT SELECT, INSERT, UPDATE ON TABLE Companies TO dispatcher;
+GRANT USAGE ON SCHEMA public TO dispatcher;
+
+CREATE USER mapilot WITH
+	IN ROLE planemanager
+	PASSWORD 'boingisdabest1';
+	
+CREATE USER dispatcher1 WITH
+	IN ROLE dispatcher
+	ENCRYPTED PASSWORD 'anotherCoffee';
+	
+CREATE USER dispatcher2 WITH
+	IN ROLE dispatcher
+	ENCRYPTED PASSWORD 'anotherTea';
