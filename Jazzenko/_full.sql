@@ -388,7 +388,7 @@ select * from airports_insert('Dulles International', 'США', 'Вашингт�
 --Planes
 
 select * from planes_insert('1', 'Sukhoi SuperJet-100', '95', '2018-04-09', true);
-select * from planes_insert('2', 'Sukhoi SuperJet-100', '90', '2018-04-09', true);
+select * from planes_insert('2', 'Sukhoi SuperJet-100', '90', '2018-04-10', true);
 select * from planes_insert('2', 'Boeing-747', '300', '2019-06-22', true);
 select * from planes_insert('3', 'Boeing-737', '190', '2021-04-09', true);
 select * from planes_insert('4', 'Boeing-737', '185', '2021-03-11', true);
@@ -466,7 +466,27 @@ $$;
 
 
 -- c
+create function public.q2c_GetMaxSeatsInCoolPlanes() returns table("Max got" integer)
+language plpgsql as
+$$
+begin
+	return query
+	select distinct (select max(q8scalar_GetSeats(s.ID)) got)
+	from (select * from Schedule where TicketsTotal <= 200) s
+	where 90 < (select Rating from Companies where ID = s.Company);
+end
+$$;
 
+create function public.q2c_GetDangerousPlanesInAction() returns table("Plane ID" integer, "Model" text, "Last Maintenance" timestamp, "Last among all" timestamp)
+language plpgsql as
+$$
+begin
+	return query
+	select p.ID, p.Model, p.LastMaintenance, (select min(LastMaintenance) from Planes where Active=true) Oldest from Planes p,
+	lateral (select * from Schedule where Schedule.Plane = p.ID) as s
+	where (now() - p.LastMaintenance > (select avg(now()-LastMaintenance) from Planes));
+end
+$$;
 
 
 -- d
