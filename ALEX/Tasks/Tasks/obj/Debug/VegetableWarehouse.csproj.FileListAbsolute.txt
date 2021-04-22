@@ -1,0 +1,80 @@
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\bin\Debug\VegetableWarehouse.exe.config
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\bin\Debug\VegetableWarehouse.exe
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\bin\Debug\VegetableWarehouse.pdb
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\bin\Debug\Npgsql.dll
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Buffers.dll
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Memory.dll
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Text.Encodings.Web.dll
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Text.Json.dll
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Threading.Channels.dll
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.ValueTuple.dll
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\bin\Debug\Npgsql.xml
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Buffers.xml
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Memory.xml
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Text.Encodings.Web.xml
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Text.Json.xml
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Threading.Channels.xml
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.ValueTuple.xml
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\obj\Debug\VegetableWarehouse.csprojAssemblyReference.cache
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\obj\Debug\MainWindow.g.cs
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\obj\Debug\App.g.cs
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\obj\Debug\VegetableWarehouse_MarkupCompile.cache
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\obj\Debug\VegetableWarehouse_MarkupCompile.lref
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\obj\Debug\MainWindow.baml
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\obj\Debug\VegetableWarehouse.g.resources
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\obj\Debug\VegetableWarehouse.Properties.Resources.resources
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\obj\Debug\VegetableWarehouse.csproj.GenerateResource.cache
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\obj\Debug\VegetableWarehouse.csproj.CoreCompileInputs.cache
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\obj\Debug\VegetableWarehouse.csproj.CopyComplete
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\obj\Debug\VegetableWarehouse.exe
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\obj\Debug\VegetableWarehouse.pdb
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\obj\Debug\InsertWindow.g.cs
+C:\Users\pc\Documents\GitHub\kursa4i\Stepan Cheeeeeel\VegetableWarehouse\VegetableWarehouse\obj\Debug\InsertWindow.baml
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\bin\Debug\VegetableWarehouse.exe.config
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\bin\Debug\VegetableWarehouse.exe
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\bin\Debug\VegetableWarehouse.pdb
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\bin\Debug\Npgsql.dll
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Buffers.dll
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Memory.dll
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Text.Encodings.Web.dll
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Text.Json.dll
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Threading.Channels.dll
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.ValueTuple.dll
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\bin\Debug\Npgsql.xml
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Buffers.xml
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Memory.xml
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Text.Encodings.Web.xml
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Text.Json.xml
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Threading.Channels.xml
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\bin\Debug\System.ValueTuple.xml
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\obj\Debug\VegetableWarehouse.csprojAssemblyReference.cache
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\obj\Debug\InsertWindow.g.cs
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\obj\Debug\MainWindow.g.cs
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\obj\Debug\App.g.cs
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\obj\Debug\VegetableWarehouse_MarkupCompile.cache
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\obj\Debug\VegetableWarehouse_MarkupCompile.lref
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\obj\Debug\InsertWindow.baml
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\obj\Debug\MainWindow.baml
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\obj\Debug\VegetableWarehouse.g.resources
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\obj\Debug\VegetableWarehouse.Properties.Resources.resources
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\obj\Debug\VegetableWarehouse.csproj.GenerateResource.cache
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\obj\Debug\VegetableWarehouse.csproj.CoreCompileInputs.cache
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\obj\Debug\VegetableWarehouse.csproj.CopyComplete
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\obj\Debug\VegetableWarehouse.exe
+C:\Users\pc\Documents\курсач\VegetableWarehouse\VegetableWarehouse\obj\Debug\VegetableWarehouse.pdb
