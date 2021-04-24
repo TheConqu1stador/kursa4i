@@ -39,6 +39,34 @@ $$;
 
 --2c
 
+--ccn
+create or replace function public.query_2c_GetLargeTasksInfo() returns table("Task ID" integer, "Task name" varchar(64), "Description" varchar(128), "Time spent" interval, "Start time" timestamp, "Update time" timestamp, "Access level" varchar(64), "Proj starts this month" boolean)
+language plpgsql as
+$$
+begin
+	return query
+	select t.id, t.name, t.description, t.time_spent, s.Start_time, s.Update_time, s.al_Name, (select p.Start_time > (now() - INTERVAL '31d') from Project p where t.project_id = p.id) "Proj this month"
+	from Access_Levels al, Task t
+	inner join lateral (select id, Start_Time, Update_time, al.Name al_name from Status where Status.Access_Level = al.id) s on s.Id = t.id
+	where t.time_spent > (select AVG(time_spent) from Task);
+end
+$$;
+
+--nnc
+create or replace function public.query_2c_GetActiveEmployeeStats() returns table("Employee ID" integer, "Employee name" varchar(64), "Post" varchar(64), "WD more than avg" boolean)
+language plpgsql as
+$$
+begin
+	return query
+	select e.id, e.name, e.post, (select AVG(wd.end_time - wd.start_time)) > (select AVG(end_time - start_time) from working_day) moreThanAvgWd
+	from employee e
+	inner join (select employee_id, start_time, end_time from working_day) wd on wd.employee_id = e.id
+	where exists(select 1 from Task inner join Status on Task.status_id = Status.id where task.executor_id = e.id and Status.Is_Archive = false)
+	group by e.id
+	order by e.id;
+end
+$$;
+
 --2d
 create or replace function public.query_2d_GetAmountOfBreaksMoreThanHour(_employee_id integer) returns table("Name" text, "Max break" interval, "Amount" bigint)
 language plpgsql as
@@ -79,8 +107,8 @@ begin
 end
 $$;
 
---8 table func
-create function public.query_tfunc8_GetProjectStats(_ID integer) returns table(Start_Time timestamp, Update_Time timestamp)
+--8 table
+create function public.query_8table_GetProjectStats(_ID integer) returns table(Start_Time timestamp, Update_Time timestamp)
 language plpgsql as
 $$
 begin
@@ -108,7 +136,7 @@ begin
 		if (rec.Update_Time < (now() - '31d')) then
 			
 			projectid = (select Project_ID from Task t where Status_ID = rec.ID);
-			projectAbandoned = (now() - '14d') > (select max(Start_Time) from query_tfunc8_GetProjectStats(projectid));
+			projectAbandoned = (now() - '14d') > (select max(Start_Time) from query_8table_GetProjectStats(projectid));
 			
 			if ((projectAbandoned = true) and (rec.Is_Archive = false)) then
 			
@@ -162,3 +190,5 @@ end
 $$;
 
 create trigger status_trg before insert or update or delete on Status for each row execute function public.Status_trigger();
+
+
