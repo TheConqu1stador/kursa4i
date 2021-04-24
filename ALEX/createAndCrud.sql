@@ -77,6 +77,7 @@ CREATE TABLE Status (
 	Update_Time TIMESTAMP
 );
 
+CREATE INDEX INDEX_Status1 ON Status(ID);
 
 -- t3
 CREATE TABLE Task (
