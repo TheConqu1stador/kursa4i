@@ -133,10 +133,10 @@ declare
 begin
 	for rec in cur loop
 		
-		if (rec.Update_Time < (now() - '31d')) then
+		if (rec.Update_Time < (now() - interval '31d')) then
 			
 			projectid = (select Project_ID from Task t where Status_ID = rec.ID);
-			projectAbandoned = (now() - '14d') > (select max(Start_Time) from query_8table_GetProjectStats(projectid));
+			projectAbandoned = (now() - interval '14d') > (select max(Start_Time) from query_tfunc8_GetProjectStats(projectid));
 			
 			if ((projectAbandoned = true) and (rec.Is_Archive = false)) then
 			
@@ -148,14 +148,14 @@ begin
 			end if;
 		end if;
 		
-		if ((rec.Is_Archive = true) and (rec.AccessLevel = 1)) then
+		if ((rec.Is_Archive = true) and (rec.Access_Level = 1)) then
 			update Status
-			set AccessLevel = 2
+			set Access_Level = 2
 			where ID = rec.ID;
 		end if;
 		
 		
-		if (rec.AccessLevel = 3) then
+		if (rec.Access_Level = 3) then
 			rollback;
 		else
 			commit;
@@ -164,6 +164,7 @@ begin
 	end loop;
 end
 $$;
+
 
 --trigger
 create or replace function public.Status_trigger() returns trigger
