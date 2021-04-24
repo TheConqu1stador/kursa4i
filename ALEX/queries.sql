@@ -40,5 +40,32 @@ $$;
 --2c
 
 --2d
+create or replace function public.query_2d_GetAmountOfBreaksMoreThanHour(_employee_id integer) returns table("Name" text, "Max break" interval, "Amount" bigint)
+language plpgsql as
+$$
+begin
+	return query
+	select MAX(e.Name), MAX(wd.breaks_time), COUNT(*)
+	from Working_Day wd
+	inner join Employee e on wd.Employee_id = e.id
+	where wd.breaks_time >= INTERVAL '1H'
+	group by wd.employee_id
+	having MAX(e.ID) = _employee_id;
+end
+$$;
 
 --2e
+create or replace function public.query_2e_GetEmployeesWithAvgBreaksMoreThan10perc() returns table("Name" varchar(64))
+language plpgsql as
+$$
+begin
+	return query
+	SELECT Name
+	FROM Employee
+	WHERE ID = ANY 
+	(select wd.employee_id from Working_Day wd 
+		where EXTRACT(EPOCH from breaks_time) > 0
+		group by employee_ID
+		having EXTRACT(EPOCH from AVG(wd.breaks_time)) / EXTRACT(EPOCH from AVG(end_time - start_time)) > 0.1);
+end
+$$;
