@@ -50,12 +50,12 @@ call Project_insert('Улучшение работы компании', 5, 'Вн
 --Task
 call Task_insert(1, 1, 'Проектирование интерфейса', 1, 'Нам нужен GUI', INTERVAL '2H');
 call Task_insert(2, 4, 'Разработка серверной части', 1, 'Зачем GUI без приложения', INTERVAL '7H');
-call Task_insert(3, 3, 'Разработка интерфейса', 1, 'У нас будет GUI', INTERVAL '3H');
+call Task_insert(3, 2, 'Разработка интерфейса', 1, 'У нас будет GUI', INTERVAL '3H');
 call Task_insert(4, 4, 'Разработка БД', 1, 'MariaDB на офисном ПК', INTERVAL '10H');
 
 call Task_insert(5, 2, 'Поиск проблем', 2, 'monkey testing', INTERVAL '1H');
 call Task_insert(6, 5, 'Решение проблем', 2, 'Спасибо Алексею за работу', INTERVAL '8H');
-call Task_insert(7, 3, 'Разработка интерфейса', 2, 'Улучшение качества', INTERVAL '5H');
+call Task_insert(7, 2, 'Разработка интерфейса', 2, 'Улучшение качества', INTERVAL '5H');
 call Task_insert(8, 5, 'Решение остальных проблем', 2, 'Оставшиеся проблемы', INTERVAL '12H');
 
 call Task_insert(9, 6, 'Пересмотр юридических моментов', 3, 'Проблемы с налоговой', INTERVAL '1H');
