@@ -136,7 +136,7 @@ begin
 		if (rec.Update_Time < (now() - interval '31d')) then
 			
 			projectid = (select Project_ID from Task t where Status_ID = rec.ID);
-			projectAbandoned = (now() - interval '14d') > (select max(Start_Time) from query_tfunc8_GetProjectStats(projectid));
+			projectAbandoned = (now() - interval '14d') > (select max(Start_Time) from query_8table_GetProjectStats(projectid));
 			
 			if ((projectAbandoned = true) and (rec.Is_Archive = false)) then
 			
