@@ -66,6 +66,16 @@ begin
 	(select wd.employee_id from Working_Day wd 
 		where EXTRACT(EPOCH from breaks_time) > 0
 		group by employee_ID
-		having EXTRACT(EPOCH from AVG(wd.breaks_time)) / EXTRACT(EPOCH from AVG(end_time - start_time)) > 0.1);
+		having query_8scalar_DivideIntervals(AVG(wd.breaks_time), AVG(end_time - start_time)) > 0.1);
 end
 $$;
+
+--8 scalar
+create or replace function public.query_8scalar_DivideIntervals(firstInterval interval, secondInterval interval) returns numeric
+language plpgsql as
+$$
+begin
+	return (EXTRACT(EPOCH from firstInterval) / EXTRACT(EPOCH from secondInterval));
+end
+$$;
+	
