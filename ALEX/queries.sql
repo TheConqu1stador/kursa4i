@@ -78,4 +78,27 @@ begin
 	return (EXTRACT(EPOCH from firstInterval) / EXTRACT(EPOCH from secondInterval));
 end
 $$;
-	
+
+--trigger
+create or replace function public.Status_trigger() returns trigger
+    language plpgsql as 
+$$
+begin
+	if (TG_OP = 'INSERT') then
+		NEW.Start_Time = now();
+		NEW.Update_Time = now();
+		return NEW;
+	end if;
+	if (TG_OP = 'UPDATE') then
+		NEW.Update_Time = now();
+		return NEW;
+	end if;
+	if (TG_OP = 'DELETE') then
+		call status_insert('archived', true, 2, null, null);
+		update Task set Status_ID = (select MAX(ID) from Status) where Status_ID = old.ID;
+		return old;
+	end if;
+end
+$$;
+
+create trigger status_trg before insert or update or delete on Status for each row execute function public.Status_trigger();
