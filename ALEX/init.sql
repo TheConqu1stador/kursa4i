@@ -13,16 +13,16 @@ alter sequence Task_ID_seq restart;
 alter sequence Working_Day_ID_seq restart;
 
 --Access_Levels
-call Access_Levels_insert('Рабочий');
-call Access_Levels_insert('Менеджер');
-call Access_Levels_insert('Директор');
+call Access_Levels_insert('Рабочий');  -- 1
+call Access_Levels_insert('Менеджер'); -- 2
+call Access_Levels_insert('Директор'); -- 3
 
 --Employee
 call Employee_insert('Иванов Иван Иванович', 1, '30000', 'Младший разработчик');
 call Employee_insert('Гоев Алексей Петрович', 1, '100', 'Системный архитектор');
 call Employee_insert('Петров Петр Петрович', 1, '60000', 'Разработчик');
 call Employee_insert('Александров Борис Юрьевич', 2, '80000', 'Менеджер важных проектов');
-call Employee_insert('Филатов Вячеслав Валерьевич', 2, '700000', 'Менеджер слишком важных проектов');
+call Employee_insert('Филатов Вячеслав Валерьевич', 2, '700000', 'Менеджер особо важных проектов');
 call Employee_insert('Юдеман Иосиф Иудович', 3, '92233720368547', 'Технический директор');
 
 --Status
@@ -31,25 +31,32 @@ call Status_insert('На проверке', false, 2, '2021-04-10 09:00:00', '20
 call Status_insert('В работе', false, 1, '2021-04-12 09:00:00', '2021-04-13 14:35:03');
 call Status_insert('Завершена', true, 2, '2021-04-05 09:00:00', '2021-04-22 11:26:51');
 
-call Status_insert('Принять в работу', false, 1, '2021-04-13 15:00:00', '2021-04-13 15:00:00');
+call Status_insert('Завершена', true, 1, '2021-04-13 15:00:00', '2021-04-13 15:00:00');
 call Status_insert('На проверке', false, 2, '2021-04-08 11:53:22', '2021-04-12 13:44:19');
 call Status_insert('В работе', false, 1, '2021-04-16 16:17:07', '2021-04-18 12:39:22');
-call Status_insert('Завершена', true, 2, '2021-04-15 17:48:03', '2021-04-21 10:23:55');
+call Status_insert('В работе', false, 1, '2021-04-15 17:48:03', '2021-04-21 10:23:55');
 
 --Project
-call Project_insert('(((Важный))) проект', 4, 'ООО ПИВПРОМ', '2021-03-01 01:00:00');
-call Project_insert('Слишком (((важный))) проект', 5, 'ЕАО ЗИОН', '2021-04-01 01:00:00');
+call Project_insert('Кассовое приложение', 4, 'ООО PIVPROM', '2021-03-01 01:00:00');
+call Project_insert('Очередной enterprise-level проект', 5, 'ЕАО ЗИОН', '2021-04-01 01:00:00');
+call Project_insert('Улучшение работы компании', 5, 'Внутренний проект', '2021-01-08 09:00:00');
 
 --Task
-call Task_insert(1, 1, 'Интересная задача', 1, '', INTERVAL '2H');
-call Task_insert(2, 4, 'Очень интересная задача', 1, '', INTERVAL '7H');
-call Task_insert(3, 3, 'Задача со звёздочкой', 1, '', INTERVAL '3H');
-call Task_insert(4, 4, 'Задача коммивояжера', 1, '', INTERVAL '10H');
+call Task_insert(1, 1, 'Проектирование интерфейса', 1, 'Нам нужен GUI', INTERVAL '2H');
+call Task_insert(2, 4, 'Разработка серверной части', 1, 'Зачем GUI без приложения', INTERVAL '7H');
+call Task_insert(3, 3, 'Разработка интерфейса', 1, 'У нас будет GUI', INTERVAL '3H');
+call Task_insert(4, 4, 'Разработка БД', 1, 'MariaDB на офисном ПК', INTERVAL '10H');
 
-call Task_insert(5, 2, 'Сделать 50% проекта', 2, '', INTERVAL '1H');
-call Task_insert(6, 5, 'Сделать 5% проекта', 2, '', INTERVAL '8H');
-call Task_insert(7, 3, 'Сделать 44% проекта', 2, '', INTERVAL '5H');
-call Task_insert(8, 5, 'Сделать 1% проекта', 2, '', INTERVAL '12H');
+call Task_insert(5, 2, 'Поиск проблем', 2, 'monkey testing', INTERVAL '1H');
+call Task_insert(6, 5, 'Решение проблем', 2, 'Спасибо Алексею за работу', INTERVAL '8H');
+call Task_insert(7, 3, 'Разработка интерфейса', 2, 'Улучшение качества', INTERVAL '5H');
+call Task_insert(8, 5, 'Решение остальных проблем', 2, 'Оставшиеся проблемы', INTERVAL '12H');
+
+call Task_insert(5, 6, 'Пересмотр юридических моментов', 1, 'monkey testing', INTERVAL '1H');
+call Task_insert(6, 5, 'Решение проблем', 2, 'Спасибо Алексею за работу', INTERVAL '8H');
+call Task_insert(7, 3, 'Разработка интерфейса', 2, 'Улучшение качества', INTERVAL '5H');
+call Task_insert(8, 5, 'Решение остальных проблем', 2, 'Оставшиеся проблемы', INTERVAL '12H');
+
 
 --Working_Day
 call Working_Day_insert(1, '2021-04-11 08:00:00', '2021-04-11 18:00:00', INTERVAL '0H');
