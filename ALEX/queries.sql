@@ -85,7 +85,9 @@ create or replace function public.Status_trigger() returns trigger
 $$
 begin
 	if (TG_OP = 'INSERT') then
-		NEW.Start_Time = now();
+		if (NEW.Is_Archive = false) then
+			NEW.Start_Time = now();
+		end if;
 		NEW.Update_Time = now();
 		return NEW;
 	end if;
@@ -94,7 +96,7 @@ begin
 		return NEW;
 	end if;
 	if (TG_OP = 'DELETE') then
-		call status_insert('archived', true, 2, null, null);
+		call status_insert('archived', true, 2, old.start_time, null);
 		update Task set Status_ID = (select MAX(ID) from Status) where Status_ID = old.ID;
 		return old;
 	end if;
