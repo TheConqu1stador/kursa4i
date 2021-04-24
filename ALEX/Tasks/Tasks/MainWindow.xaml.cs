@@ -35,6 +35,12 @@ namespace Tasks
                         TablesList.Items.Add(row[i].ToString());
                     }
                 }
+
+                tmp = conn.execute("select routine_name, routine_type from information_schema.routines where routine_schema not in ('pg_catalog', 'information_schema') and routine_name like 'query_%'");
+                foreach (DataRow row in tmp.Rows)
+                {
+                     ProceduresList.Items.Add((row[1].ToString() == "FUNCTION" ? "F_" : "P_") + row[0].ToString());
+                }
             }
             catch (Exception ex)
             {
@@ -47,6 +53,7 @@ namespace Tasks
         {
             conn.Disconnect();
             TablesList.Items.Clear();
+            ProceduresList.Items.Clear();
             DbGrid.ItemsSource = null;
             conn = null;
             selTableName = null;
@@ -69,6 +76,44 @@ namespace Tasks
 
                     DelRecordBtn.IsEnabled = true;
                     AddRecordBtn.IsEnabled = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+            }
+        }
+        private void ProceduresList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ProceduresList.SelectedItem != null)
+            {
+                string tableName = ProceduresList.SelectedItem.ToString();
+                try
+                {
+                    string routineName = ProceduresList.SelectedItem.ToString().Substring(2);
+                    string query = "select p.parameter_name " +
+                                                    "from information_schema.routines r left join information_schema.parameters p on r.specific_schema = p.specific_schema and r.specific_name = p.specific_name " +
+                                                    "where r.routine_schema not in ('pg_catalog', 'information_schema') AND p.parameter_mode = 'IN' AND r.routine_name = \'" + routineName + "\' order by p.ordinal_position;";
+                    dt = conn.execute(query);
+                    if (dt.Rows.Count == 0)
+                    {
+                        string prefix = ProceduresList.SelectedItem.ToString().Substring(0, 2);
+                        query = (prefix == "F_" ? "SELECT * FROM " : "CALL ") + routineName + "();";
+                        Console.WriteLine(query);
+                        dt = conn.execute(query);
+                        DbGrid.ItemsSource = dt.DefaultView;
+                        selTableName = tableName;
+                    }
+                    else
+                    {
+                        List<string> headers = new List<string>();
+                        for(int i = 0; i < dt.Rows.Count; ++i)
+                        {
+                            headers.Add(dt.Rows[i].Field<string>(0));
+                        }
+                        ParametersWindow insert = new ParametersWindow(conn, dt, DbGrid, headers, ProceduresList.SelectedItem.ToString(), "ROUTINE");
+                        insert.ShowDialog();
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -119,7 +164,12 @@ namespace Tasks
             {
                 try
                 {
-                    InsertWindow insert = new InsertWindow(DbGrid.Columns, selTableName, conn, dt);
+                    List<string> headers = new List<string>();
+                    foreach (var column in DbGrid.Columns)
+                    {
+                        headers.Add(column.Header.ToString());
+                    }
+                    ParametersWindow insert = new ParametersWindow(conn, dt, DbGrid, headers, selTableName, "INSERT");
                     insert.ShowDialog();
                     string query = "SELECT * FROM \"" + selTableName + "\"";
                     dt = conn.execute(query);

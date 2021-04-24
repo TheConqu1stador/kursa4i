@@ -89,7 +89,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="InsertWindow.xaml">
+    <Page Include="ParametersWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -102,8 +102,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DBConnect.cs" />
-    <Compile Include="InsertWindow.xaml.cs">
-      <DependentUpon>InsertWindow.xaml</DependentUpon>
+    <Compile Include="ParametersWindow.xaml.cs">
+      <DependentUpon>ParametersWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

@@ -25,6 +25,6 @@
         <Label Content="Список таблиц" HorizontalAlignment="Left" Margin="10,127,0,0" VerticalAlignment="Top" Height="26" Width="104" Grid.ColumnSpan="2"/>
         <Label Content="Функции и процедуры&#xA;" HorizontalAlignment="Left" Margin="13,310,0,0" VerticalAlignment="Top" Height="26" Width="151" Grid.ColumnSpan="2"/>
         <ListBox x:Name="TablesList" HorizontalAlignment="Left" Height="100" Margin="10,158,0,0" VerticalAlignment="Top" Width="257" Grid.ColumnSpan="2" SelectionChanged="TablesList_SelectionChanged"/>
-        <ListBox x:Name="ProceduresList" HorizontalAlignment="Left" Height="100" Margin="13,341,0,0" VerticalAlignment="Top" Width="257" Grid.ColumnSpan="2" SelectionChanged="TablesList_SelectionChanged"/>
+        <ListBox x:Name="ProceduresList" HorizontalAlignment="Left" Height="100" Margin="13,341,0,0" VerticalAlignment="Top" Width="257" Grid.ColumnSpan="2" SelectionChanged="ProceduresList_SelectionChanged"/>
     </Grid>
 </Window>
