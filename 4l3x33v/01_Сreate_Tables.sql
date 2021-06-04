@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS public.Department (
 		UNIQUE
 		PRIMARY KEY,
 	Name TEXT,
-	ParentDepartment INT
+	ParentDepartmentID INT
 		DEFAULT 0,
 	MainOfficeID INT
 		DEFAULT 0,
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS public.Department (
 			REFERENCES public.Office(ID)
 			ON DELETE SET NULL,
 	CONSTRAINT FK_Department_Department_ParentDepartment
-		FOREIGN KEY(ParentDepartment)
+		FOREIGN KEY(ParentDepartmentID)
 			REFERENCES public.Department(ID)
 			ON DELETE SET NULL
 );
