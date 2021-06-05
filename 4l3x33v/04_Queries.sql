@@ -90,9 +90,27 @@ begin
 end
 $$;
 
--- 6-7 пункт. Реализован курсор по всем договорам.
---Если в специальных условиях договора прописана возможность удаленной работы, то переводим сотрудника на внештат
---Если внештатников слишком много (> 50% всех сотрудников), то прекращаем перевод во внештат (откатываем транзакцию).
+-- 2e
+-- Функция возвращает названия должностей, у которых все сотрудники являются штатными
+create or replace function public.Query2e() returns table("Название должности" text)
+    language plpgsql
+    as $$
+begin
+	return query
+	select distinct p.Name
+	from Profession p
+	inner join Contract c on c.ProfessionID = p.ID
+	where 'true' = all(
+		select InStaff from 
+		Profession p
+		inner join Contract ci on ci.ProfessionID = p.ID 
+		where ci.ProfessionID = c.ProfessionID
+	);
+end
+$$;
+
+-- 8 пункт, векторная функция
+-- Возвращает все контракты, не связаные с должнстью директора
 create or replace function public.getNonDirectorContracts() returns table(ID int, Salary int, SpecialTerms text, HoursPerWeek int, ProfessionID int, inStaff bool)
 	language plpgsql
 	as $$
@@ -103,6 +121,10 @@ begin
 		where Contract.ProfessionID != 5;
 end
 $$;
+
+-- 6-7 пункт. Реализован курсор по всем договорам.
+--Если в специальных условиях договора прописана возможность удаленной работы, то переводим сотрудника на внештат
+--Если внештатников слишком много (> 50% всех сотрудников), то прекращаем перевод во внештат (откатываем транзакцию).
 
 create or replace procedure Query6_7()
 language plpgsql as
