@@ -68,4 +68,4 @@ where Employee_insert(1, 'Садкова Кристина', 3, 21) = 1
   and Employee_insert(10, 'Семёнов Павел', 2, 43) = 1
   and Employee_insert(11, 'Дробышева Алла', 7, 31) = 1
   and Employee_insert(12, 'Мехов Григорий', 7, 26) = 1
-  and Employee_insert(13, 'Каспаров Сергей', 1, 41) = 1
+  and Employee_insert(13, 'Каспаров Сергей', 1, 41) = 1;
