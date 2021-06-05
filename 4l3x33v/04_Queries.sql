@@ -42,15 +42,37 @@ begin
 end
 $$;
 
--- 2c - 
--- 
-create function public.Query2c() returns table()
+-- 2c - кореллированные и некореллированные
+-- 2c1 - среднее количество рабочих часов для каждого департамента и в целом
+create function public.Query2c1() returns table("Департамент" text, "Средне часов " int, "Средне часов в департаменте" int)
     language plpgsql
     as $$
 begin
 	return query
-	select *
-	from View_Employees;
+	select distinct d.Name, 
+	(select AVG(HoursPerWeek) from Contract)::int avgall,	-- некореллированный в select
+	(select AVG(HoursPerWeek) from Contract ci				-- /
+		inner join Employee ei on ei.ContractID = ci.ID 	-- | кореллированный в select
+		where ei.DepartmentID = e.DepartmentID)::int avgdpt -- \
+	from Employee e
+		inner join (select * from Department where MainOfficeID = 2) d on d.ID = e.DepartmentID; -- некореллированный в from
+end
+$$;
+
+-- 2c2 - потенциальные наставники с той же профессией и зарплатой выше среднего для работников с возрастом ниже среднего
+create function public.Query2c2() returns table("Потенциальный ученик" text, "Потенциальный наставник" text)
+    language plpgsql
+    as $$
+begin
+	return query
+	select e.Name, ltTable.Name
+		from Employee e
+		inner join Contract c on e.ContractID = c.ID
+		inner join lateral (select ei.ID, ei.Name, ci.Salary, ei.DepartmentID from Employee ei -- /
+						inner join Contract ci on ei.ContractID = ci.ID 					   -- | кореллированный в from
+						where ci.ProfessionID = c.ProfessionID) ltTable on e.ID != ltTable.ID  -- \
+		where (select avg(Salary) from Contract) <= ltTable.Salary							   -- некореллированный в where
+		  and (select avg(Age) from Employee where DepartmentID = e.DepartmentID) >= e.Age;    -- кореллированный в where
 end
 $$;
 
