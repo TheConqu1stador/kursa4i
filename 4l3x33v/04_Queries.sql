@@ -1,6 +1,6 @@
 -- 2a - case-выражение и присоединение таблиц
 -- Сравнительный уровень оплаты всех штатных сотрудников
-create function public.Query2a(_low_rate integer, _high_rate integer) returns table("Имя" text, "Возраст" integer, "Часы в неделю" integer, "З/п" integer, "Уровень оплаты" text)
+create or replace function public.Query2a(_low_rate integer, _high_rate integer) returns table("Имя" text, "Возраст" integer, "Часы в неделю" integer, "З/п" integer, "Уровень оплаты" text)
     language plpgsql
     as $$
 begin
@@ -23,7 +23,7 @@ $$;
 
 -- 2b - view
 -- Много информации по сотрудникам
-create view View_Employees as
+create or replace view View_Employees as
 	select e.Name n1, e.Age, o.Name n2, o.Address, d.Name n3, c.Salary, p.Name n4
 	from Employee e
 		inner join Department d on d.ID = e.DepartmentID
@@ -32,7 +32,7 @@ create view View_Employees as
 		inner join Profession p on p.ID = c.ProfessionID;
 	
 	
-create function public.Query2b() returns table("Имя" text, "Возраст" integer, "Офис" text, "Адрес офиса" text, "Департамент" text, "З/п" integer, "Должность" text)
+create or replace function public.Query2b() returns table("Имя" text, "Возраст" integer, "Офис" text, "Адрес офиса" text, "Департамент" text, "З/п" integer, "Должность" text)
     language plpgsql
     as $$
 begin
@@ -44,7 +44,7 @@ $$;
 
 -- 2c - кореллированные и некореллированные
 -- 2c1 - среднее количество рабочих часов для каждого департамента и в целом
-create function public.Query2c1() returns table("Департамент" text, "Средне часов " int, "Средне часов в департаменте" int)
+create or replace function public.Query2c1() returns table("Департамент" text, "Средне часов " int, "Средне часов в департаменте" int)
     language plpgsql
     as $$
 begin
@@ -60,7 +60,7 @@ end
 $$;
 
 -- 2c2 - потенциальные наставники с той же профессией и зарплатой выше среднего для работников с возрастом ниже среднего
-create function public.Query2c2() returns table("Потенциальный ученик" text, "Потенциальный наставник" text)
+create or replace function public.Query2c2() returns table("Потенциальный ученик" text, "Потенциальный наставник" text)
     language plpgsql
     as $$
 begin
@@ -93,11 +93,22 @@ $$;
 -- 6-7 пункт. Реализован курсор по всем договорам.
 --Если в специальных условиях договора прописана возможность удаленной работы, то переводим сотрудника на внештат
 --Если внештатников слишком много (> 50% всех сотрудников), то прекращаем перевод во внештат (откатываем транзакцию).
+create or replace function public.getNonDirectorContracts() returns table(ID int, Salary int, SpecialTerms text, HoursPerWeek int, ProfessionID int, inStaff bool)
+	language plpgsql
+	as $$
+begin
+	return query
+	select * 
+		from Contract
+		where Contract.ProfessionID != 5;
+end
+$$;
+
 create or replace procedure Query6_7()
 language plpgsql as
 $$
 declare
-	cur cursor for select * from Contract;
+	cur cursor for select * from getNonDirectorContracts();
 	rec record;
 begin
 	for rec in cur loop
