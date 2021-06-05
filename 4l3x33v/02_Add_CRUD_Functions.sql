@@ -64,7 +64,7 @@ $$;
 --Договора
 
 --Функция для получения всех записей из таблицы Contract
-CREATE FUNCTION public.Contract_select() RETURNS TABLE(_id integer, _specialTerms text, _hoursPerWeek integer, _professionID integer, _inStaff boolean)
+CREATE FUNCTION public.Contract_select() RETURNS TABLE(_id integer, _salary integer, _specialTerms text, _hoursPerWeek integer, _professionID integer, _inStaff boolean)
     LANGUAGE plpgsql
     AS $$
 begin
@@ -74,12 +74,12 @@ end
 $$;
 
 --Функция для вставки записей в таблицу Contract
-CREATE FUNCTION public.Contract_insert(_specialTerms text, _hoursPerWeek integer, _professionID integer, _inStaff boolean) RETURNS integer
+CREATE FUNCTION public.Contract_insert(_salary integer, _specialTerms text, _hoursPerWeek integer, _professionID integer, _inStaff boolean) RETURNS integer
     LANGUAGE plpgsql
     AS $$
 begin
-	insert into Contract(SpecialTerms, HoursPerWeek, ProfessionID, inStaff)
-	values(_specialTerms, _hoursPerWeek, _professionID, _inStaff);
+	insert into Contract(Salary, SpecialTerms, HoursPerWeek, ProfessionID, inStaff)
+	values(_salary, _specialTerms, _hoursPerWeek, _professionID, _inStaff);
 	if found then
 		return 1;
 	else
@@ -89,12 +89,13 @@ end
 $$;
 
 --Функция для обновления записей таблицы Contract
-CREATE FUNCTION public.Contract_update(_id integer, _specialTerms text, _hoursPerWeek integer, _professionID integer, _inStaff boolean) RETURNS integer
+CREATE FUNCTION public.Contract_update(_id integer, _salary integer, _specialTerms text, _hoursPerWeek integer, _professionID integer, _inStaff boolean) RETURNS integer
     LANGUAGE plpgsql
     AS $$
 begin
 	update Contract
 	set
+		Salary = _salary,
 		SpecialTerms = _specialTerms, 
 		HoursPerWeek = _hoursPerWeek, 
 		ProfessionID = _professionID,

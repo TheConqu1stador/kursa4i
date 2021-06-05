@@ -1,16 +1,18 @@
+-- Очищаем таблицы
 delete from Employee;
 delete from Department;
 delete from Office;
 delete from Contract;
 delete from Profession;
 
+-- Заново начинаем последовательности отсчёта ID в таблицах
 alter sequence Profession_ID_seq restart;
 alter sequence Contract_ID_seq restart;
 alter sequence Office_ID_seq restart;
 alter sequence Department_ID_seq restart;
 alter sequence Employee_ID_seq restart;
 
-
+-- Используем для каждой таблицы функцию вставки и заполняем данные
 select 'Таблица Profession заполнена'
 where Profession_insert('SQL Разработчик', 13, 9) = 1
   and Profession_insert('C# Разработчик', 10, 9) = 1
@@ -21,19 +23,19 @@ where Profession_insert('SQL Разработчик', 13, 9) = 1
 union all
 
 select 'Таблица Contract заполнена'
-where Contract_insert('Базовая оплата - 200 рублей в час', 20, 1, false) = 1
-  and Contract_insert('Базовая оплата - 250 рублей в час', 20, 1, false) = 1
-  and Contract_insert('Базовая оплата - 60000 в месяц', 35, 1, true) = 1
-  and Contract_insert('Базовая оплата - 150 рублей в час, + реферальные бонусы', 20, 1, false) = 1
-  and Contract_insert('Оплата за каждый проект обсуждается отдельно', 20, 2, true) = 1
-  and Contract_insert('Базовая оплата - 40000 в месяц', 30, 3, true) = 1
-  and Contract_insert('Базовая оплата - 40000 в месяц', 30, 3, true) = 1
-  and Contract_insert('Базовая оплата - 45000 в месяц', 30, 3, true) = 1
-  and Contract_insert('Базовая оплата - 40000 в месяц', 30, 4, true) = 1
-  and Contract_insert('Базовая оплата - 30000 в месяц', 35, 4, true) = 1
-  and Contract_insert('Базовая оплата - 30000 в месяц', 35, 4, true) = 1
-  and Contract_insert('Базовая оплата - 50000 в месяц', 40, 4, true) = 1
-  and Contract_insert('-', 40, 5, true) = 1
+where Contract_insert(30000, 'Возможна удалённая работа', 20, 1, false) = 1
+  and Contract_insert(35000, '-', 20, 1, false) = 1
+  and Contract_insert(60000, 'Управление проектами', 35, 1, true) = 1
+  and Contract_insert(25000, 'Реферальные бонусы', 20, 1, false) = 1
+  and Contract_insert(80000, 'Оплата за каждый проект обсуждается отдельно', 20, 2, true) = 1
+  and Contract_insert(40000, '-', 30, 3, true) = 1
+  and Contract_insert(40000, 'Возможна удалённая работа', 30, 3, true) = 1
+  and Contract_insert(45000, '-', 30, 3, true) = 1
+  and Contract_insert(40000, 'Возможна удалённая работа', 30, 4, true) = 1
+  and Contract_insert(30000, '-', 35, 4, true) = 1
+  and Contract_insert(30000, 'Базовая оплата - 30000 в месяц', 35, 4, true) = 1
+  and Contract_insert(50000, 'Управление проектами', 40, 4, true) = 1
+  and Contract_insert(90000, '-', 40, 5, true) = 1
   
 union all
 
