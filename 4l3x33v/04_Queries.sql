@@ -42,3 +42,41 @@ begin
 end
 $$;
 
+-- 2c - 
+-- 
+create function public.Query2c() returns table()
+    language plpgsql
+    as $$
+begin
+	return query
+	select *
+	from View_Employees;
+end
+$$;
+
+
+-- 6-7 пункт. Реализован курсор по всем договорам.
+--Если в специальных условиях договора прописана возможность удаленной работы, то переводим сотрудника на внештат
+--Если внештатников слишком много (> 50% всех сотрудников), то прекращаем перевод во внештат
+create or replace procedure Query6_7()
+language plpgsql as
+$$
+declare
+	cur cursor for select * from Contract;
+	rec record;
+begin
+	for rec in cur loop
+		if rec.SpecialTerms like '%удалённая работа%' then
+			update Contract
+			set InStaff = false
+				where ID = rec.ID;
+		end if;
+		if ((select COUNT(1) from Contract where InStaff = false) > (select COUNT(1) / 2 from Contract)) then
+			rollback;
+		else
+			commit;
+		end if;
+		
+	end loop;
+end
+$$;
