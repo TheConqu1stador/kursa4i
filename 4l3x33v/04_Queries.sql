@@ -94,7 +94,10 @@ begin
 end
 $$;
 
-
+-- 4 пункт, триггер на изменение таблицы Profession
+-- В случае вставки новой записи в таблицу Contracts, поле ContractsMade той профессии, для которой заключается конракт, инкрементируется
+-- В случае удаления записи из таблицы Contracts, поле ContractsBroke той профессии, для которой расторгается конракт, инкрементируется
+-- В случае апдейта записи в таблице Contracts, фиксируется поле ProfessionID
 create or replace function public.Contract_trigger() returns trigger
     language plpgsql as 
 $$
