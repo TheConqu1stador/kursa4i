@@ -36,10 +36,10 @@ namespace Tasks
                     }
                 }
 
-                tmp = conn.execute("select routine_name, routine_type from information_schema.routines where routine_schema not in ('pg_catalog', 'information_schema') and routine_name like 'query_%'");
+                tmp = conn.execute("select routine_name, routine_type from information_schema.routines where routine_schema not in ('pg_catalog', 'information_schema') and routine_name like 'query%'");
                 foreach (DataRow row in tmp.Rows)
                 {
-                     ProceduresList.Items.Add((row[1].ToString() == "FUNCTION" ? "F_" : "P_") + row[0].ToString());
+                    ProceduresList.Items.Add((row[1].ToString() == "FUNCTION" ? "F_" : "P_") + row[0].ToString());
                 }
             }
             catch (Exception ex)
