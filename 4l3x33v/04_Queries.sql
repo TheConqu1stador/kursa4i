@@ -93,3 +93,29 @@ begin
 	end loop;
 end
 $$;
+
+
+create or replace function public.Contract_trigger() returns trigger
+    language plpgsql as 
+$$
+begin
+	if (TG_OP = 'INSERT') then
+		update Profession set ContractsMade = ContractsMade + 1
+		where ID = new.ProfessionID;
+		
+		return NEW;
+	end if;
+	if (TG_OP = 'UPDATE') then
+		new.ProfessionID = old.ProfessionID; 
+		return NEW;
+	end if;
+	if (TG_OP = 'DELETE') then
+		update Profession set ContractsBroke = ContractsBroke + 1
+		where ID = old.ProfessionID;
+		
+		return old;
+	end if;
+end
+$$;
+
+create trigger contract_trg before insert or update or delete on Contract for each row execute function public.Contract_trigger();
