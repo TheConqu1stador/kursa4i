@@ -54,6 +54,19 @@ begin
 end
 $$;
 
+-- 2d - Функция возвращает названия должностей, на которых средняя зп выше либо равна указанной
+
+create or replace function public.Query2d(_salary integer) returns table("Название должности" text, "Средняя зарплата" numeric)
+    language plpgsql
+    as $$
+begin
+	return query
+	select p.Name, AVG(c.salary) from Contract c
+	inner join Profession p on c.ProfessionID = p.ID
+	group by p.Name
+	having AVG(c.salary) >= _salary;
+end
+$$;
 
 -- 6-7 пункт. Реализован курсор по всем договорам.
 --Если в специальных условиях договора прописана возможность удаленной работы, то переводим сотрудника на внештат
