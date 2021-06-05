@@ -1,6 +1,6 @@
 -- 2a - case-выражение и присоединение таблиц
 -- Сравнительный уровень оплаты всех штатных сотрудников
-create function public.Query2a() returns table("Имя" text, "Возраст" integer, "Часы в неделю" integer, "З/п" integer, "Уровень оплаты" text)
+create function public.Query2a(_low_rate integer, _high_rate integer) returns table("Имя" text, "Возраст" integer, "Часы в неделю" integer, "З/п" integer, "Уровень оплаты" text)
     language plpgsql
     as $$
 begin
@@ -8,9 +8,9 @@ begin
 	select
 		e.Name, e.Age, c.HoursPerWeek, c.Salary,
 		case
-			when c.salary <= 30000
+			when c.salary <= _low_rate
 				then 'Низкая оплата'
-			when c.salary <= 55000
+			when c.salary <= _high_rate
 				then 'Средняя оплата'
 			else
 				'Высокая оплата'
