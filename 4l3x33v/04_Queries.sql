@@ -1,6 +1,6 @@
 -- 2a - case-выражение и присоединение таблиц
 -- Сравнительный уровень оплаты всех штатных сотрудников
-create or replace function public.Query2a(_low_rate integer, _high_rate integer) returns table("Имя" text, "Возраст" integer, "Часы в неделю" integer, "З/п" integer, "Уровень оплаты" text)
+create or replace function public.Query2a(_low_rate integer) returns table("Имя" text, "Возраст" integer, "Часы в неделю" integer, "З/п" integer, "Уровень оплаты" text)
     language plpgsql
     as $$
 begin
@@ -10,7 +10,7 @@ begin
 		case
 			when c.salary <= _low_rate
 				then 'Низкая оплата'
-			when c.salary <= _high_rate
+			when c.salary <= (select * from calculateMediumRate(_low_rate))
 				then 'Средняя оплата'
 			else
 				'Высокая оплата'
@@ -18,6 +18,16 @@ begin
 	from Employee e
 		inner join Contract c on c.ID = e.ContractID
 	where c.inStaff = true;
+end
+$$;
+
+-- 8 пункт, скалярная функция
+-- Вычисляет среднюю планку между указанной нижней границей и максимальной зарплатой
+create or replace function public.calculateMediumRate(_low_rate integer) returns numeric
+    language plpgsql
+    as $$
+begin
+	return ((select MAX(salary) from Contract) + _low_rate) / 2;
 end
 $$;
 
